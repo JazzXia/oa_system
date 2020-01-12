@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="css/Login.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script src="js/cookie_util.js"></script>
+    <script type="text/javascript" src="login/login.js"></script>
+
+    <!--<script type="text/javascript" src="js/jquery.cookie.js"></script>-->
+</head>
+<body>
+<div id="login">
+    <h1>OA System</h1>
+    <form>
+        <input type="text" required="required" placeholder="用户名" name="u" id="user"></input>
+        <p style="text-align: center;color: red"></p>
+        <input type="password" required="required" placeholder="密码" name="p" id="pass"></input>
+        <p style="text-align: center;color: red"></p>
+        <button class="but" type="submit" id="info">登录</button>
+    </form>
+</div>
+</body>
+</html>

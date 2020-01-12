@@ -1,0 +1,206 @@
+package com.qtatelier.OASystem.web;
+
+import com.alibaba.fastjson.JSONObject;
+import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
+import com.qtatelier.config.CodeBusiness;
+import com.qtatelier.config.CodeEnum;
+import com.qtatelier.config.ResultView;
+import com.qtatelier.config.ToolRedis;
+import com.qtatelier.config.token.JWTUtil;
+import com.qtatelier.dev_util.commons.annotation.PassToken;
+import com.qtatelier.dev_util.commons.annotation.UserLoginToken;
+import com.qtatelier.dto.BlogUser;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * @description: 用户信息以及权限管理
+ * @author:JazzXia(kima_riiiiii)
+ * @date:2019-01-12 13:48
+ * @contact:jazzxiaw@qq.com & xia.weiwei163@163.com & xiaww@redoornetwork.com
+ */
+@RestController
+@Api(value = "用户信息", tags = "用户信息列表")
+@RequestMapping("/role")
+public class BlogUserController{
+
+    //日志
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private BlogUserService blogUserService;
+
+    @Autowired
+    private JWTUtil tokenService;
+
+    @Autowired
+    private ToolRedis redis;
+
+    @Value("#{'salt'}")
+    private String salt;
+
+
+    /**
+     *
+     * @description 获取用户列表
+     *
+     * @return
+     */
+
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", paramType = "query", dataType = "String")
+    })
+    @GetMapping("/info")
+    //@UserLoginToken
+    public ResultView getUserInfo(String userId) {
+        String logStr = "获取用户";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr+"开始");
+            BlogUser blogUser = blogUserService.findUserById(userId);
+            if(null == blogUser){
+                logger.info(logStr+"失败");
+                return new ResultView(CodeEnum.ERROR_404,"暂无用户信息");
+            }
+            return new ResultView(CodeEnum.SUCCESS,"获取用户成功",blogUser);
+        } catch (Exception e) {
+            logger.error(logStr+"失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "获取用户异常");
+        } finally {
+
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+
+
+    /**
+     *
+     * @description 获取用户列表
+     *
+     * @return
+     */
+
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @GetMapping("/list")
+    @UserLoginToken
+    public ResultView getUser(String token) {
+        String logStr = "获取所有用户,token={}";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr+"开始",token);
+            List<BlogUser> list = blogUserService.findAll();
+            if(list.isEmpty()){
+                logger.info(logStr+"失败",token);
+                return new ResultView(CodeEnum.ERROR_404,"暂无用户信息");
+            }
+            return new ResultView(CodeEnum.SUCCESS,"获取所有用户成功",list);
+        } catch (Exception e) {
+            logger.error(logStr+"失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "获取所有用户异常");
+        } finally {
+
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+
+    /**
+     * @description 新增用户
+     * @return
+     */
+    @ApiOperation(value = "添加用户", notes = "添加新用户")
+/*    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })*/
+    @PostMapping("/add")
+    @PassToken
+    public ResultView insertUser(@RequestBody BlogUser blogUser/*,@ApiIgnore String token*/) {
+
+        String logStr = "新增用户,BlogUser={}";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始",blogUser);
+            int count = blogUserService.insertUser(blogUser);
+            if(count != 1){
+                logger.error(logStr+"新增用户不能为空");
+                resultView = new ResultView(CodeEnum.ERROR_404, "新增用户不能为空");
+            }
+           resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功",count);
+           return resultView;
+        } catch (Exception e) {
+            logger.error(logStr+"失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "新增用户异常");
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+
+    /**
+     * 登录
+     * @param blogUser
+     * @return
+     */
+    @ApiOperation(value = "登录", notes = "登录账户")
+    @PostMapping("/login")
+    public ResultView login(BlogUser blogUser) {
+        logger.info("用户" + blogUser.getUsername() + "尝试登录");
+        String logStr = "用户登录";
+        ResultView resultView = null;
+        try {
+            BlogUser userForBase = blogUserService.findUserByname(blogUser);
+            if (userForBase == null) {
+                logger.warn(logStr + "账号" + blogUser.getUsername() + "不存在！");
+                resultView = new ResultView(CodeEnum.ERROR_404, "登录失败，账号或密码错误");
+                return resultView;
+            } else {
+                if (!userForBase.getPassword().equals(DigestUtils.md5Hex(salt + blogUser.getPassword().trim()))) {
+                    logger.warn(logStr + "密码错误");
+                    resultView = new ResultView(CodeEnum.ERROR_403, "登录失败，账号或密码错误");
+                    return resultView;
+                } else {
+                    String token = tokenService.getToken(userForBase);
+                    userForBase.setToken(token);
+                    //用户信息存入redis中
+                    redis.set(CodeBusiness.TOKEN_ACCESS_KEY + token, userForBase, CodeBusiness.SESSTION_TIME);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("user", userForBase);
+                    logger.info(logStr+"登录成功");
+                    resultView = new ResultView(CodeEnum.SUCCESS,"登陆成功", jsonObject);
+                    return resultView;
+                }
+            }
+        } catch (Exception e) {
+            logger.error(logStr+"用户登录失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "登录系统异常");
+        } finally {
+            logger.info(logStr + "用户：" + blogUser.getUsername() + "登录结束");
+        }
+        return resultView;
+    }
+}
