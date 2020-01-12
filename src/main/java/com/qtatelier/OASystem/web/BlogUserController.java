@@ -7,7 +7,6 @@ import com.qtatelier.config.CodeEnum;
 import com.qtatelier.config.ResultView;
 import com.qtatelier.config.ToolRedis;
 import com.qtatelier.config.token.JWTUtil;
-import com.qtatelier.dev_util.commons.annotation.PassToken;
 import com.qtatelier.dev_util.commons.annotation.UserLoginToken;
 import com.qtatelier.dto.BlogUser;
 import io.swagger.annotations.Api;
@@ -19,12 +18,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -50,24 +52,28 @@ public class BlogUserController{
     @Autowired
     private ToolRedis redis;
 
+    @Resource
+    RedisTemplate redisTemplate; //k-v都是对象的
+
     @Value("#{'salt'}")
     private String salt;
 
 
     /**
      *
-     * @description 获取用户列表
+     * @description 获取用户信息
      *
      * @return
      */
 
     @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id", paramType = "query", dataType = "String")
+            @ApiImplicitParam(name = "userId", value = "用户id", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @GetMapping("/info")
-    //@UserLoginToken
-    public ResultView getUserInfo(String userId) {
+    @UserLoginToken
+    public ResultView getUserInfo(String userId,String token) {
         String logStr = "获取用户";
         ResultView resultView = null;
         try {
@@ -132,12 +138,12 @@ public class BlogUserController{
      * @return
      */
     @ApiOperation(value = "添加用户", notes = "添加新用户")
-/*    @ApiImplicitParams({
+    @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
-    })*/
+    })
     @PostMapping("/add")
-    @PassToken
-    public ResultView insertUser(@RequestBody BlogUser blogUser/*,@ApiIgnore String token*/) {
+    @UserLoginToken
+    public ResultView insertUser(@RequestBody BlogUser blogUser, @ApiIgnore String token) {
 
         String logStr = "新增用户,BlogUser={}";
         ResultView resultView = null;
@@ -148,8 +154,8 @@ public class BlogUserController{
                 logger.error(logStr+"新增用户不能为空");
                 resultView = new ResultView(CodeEnum.ERROR_404, "新增用户不能为空");
             }
-           resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功",count);
-           return resultView;
+            resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功",count);
+            return resultView;
         } catch (Exception e) {
             logger.error(logStr+"失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "新增用户异常");
@@ -167,8 +173,15 @@ public class BlogUserController{
      * @return
      */
     @ApiOperation(value = "登录", notes = "登录账户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataType = "String")
+    })
     @PostMapping("/login")
-    public ResultView login(BlogUser blogUser) {
+    public ResultView login(String userName,String password) {
+        BlogUser blogUser = new BlogUser();
+        blogUser.setPassword(password);
+        blogUser.setUsername(userName);
         logger.info("用户" + blogUser.getUsername() + "尝试登录");
         String logStr = "用户登录";
         ResultView resultView = null;
@@ -176,7 +189,7 @@ public class BlogUserController{
             BlogUser userForBase = blogUserService.findUserByname(blogUser);
             if (userForBase == null) {
                 logger.warn(logStr + "账号" + blogUser.getUsername() + "不存在！");
-                resultView = new ResultView(CodeEnum.ERROR_404, "登录失败，账号或密码错误");
+                resultView = new ResultView(CodeEnum.ERROR_403, "登录失败，账号或密码错误");
                 return resultView;
             } else {
                 if (!userForBase.getPassword().equals(DigestUtils.md5Hex(salt + blogUser.getPassword().trim()))) {
@@ -203,4 +216,40 @@ public class BlogUserController{
         }
         return resultView;
     }
+
+
+    /**
+     * @description 登出
+     * @param
+     * @return
+     */
+    @ApiOperation(value = "登出", notes = "退出账号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @GetMapping("/logout")
+    @UserLoginToken
+    public ResultView logout(String token) {
+        String logStr = "用户退出";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始",token);
+            boolean flag = redis.delKey(CodeBusiness.TOKEN_ACCESS_KEY);
+            if (flag){
+                resultView =  new ResultView(CodeEnum.SUCCESS,"退出成功");
+            }else {
+                resultView = new ResultView(CodeEnum.ERROR_500,"退出失败");
+            }
+
+            return resultView;
+        } catch (Exception e) {
+            logger.error(logStr+"失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "退出异常",e);
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
 }

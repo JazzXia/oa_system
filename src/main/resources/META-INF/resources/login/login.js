@@ -37,7 +37,7 @@ function login() {
         return
     }
     var data = {
-        username : userName,
+        userName : userName,
         password : password
     };
     $.ajax({
@@ -48,14 +48,16 @@ function login() {
         success : function(result) {
             if (result.code == SUCCESS) {
                 var user = result.data;
-                addCookie("token", user.token);
-                addCookie("roleType", user.roleType);
-                location.href("index.html");
+                console.log(user.token)
+                addCookie("token", user.user.token);
+                addCookie("id",user.user.userId);
+                addCookie("roleType", user.user.roleType);
+                location.href = "/index.html";
             } else {
                 var msg = result.msg;
                 if (result.code == ERROR) {
                     console.log(msg)
-                    alert(msg)
+                    $("#pass").next().html(msg);
                 } else {
                     alert(msg)
                 }
