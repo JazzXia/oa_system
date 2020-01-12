@@ -64,7 +64,7 @@ function login() {
             }
         },
         error : function(e) {
-            alert("通信失败",e.msg)
+            alert("网络连接异常",e.msg)
         }
     })
 };

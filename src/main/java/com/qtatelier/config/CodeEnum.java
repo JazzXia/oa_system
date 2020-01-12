@@ -14,7 +14,8 @@ public enum CodeEnum {
     ERROR_403("权限校验失败", 403),
     ERROR_404("资源不存在", 404),
     ERROR_405("访问方式不合法", 405),
-    ERROR_500("系统内部错误", 500);
+    ERROR_500("系统内部错误", 500),
+    ERROR_501("添加部门失败",501);
 
     private String name;
     private int value;
