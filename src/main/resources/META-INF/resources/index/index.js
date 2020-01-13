@@ -54,7 +54,10 @@ function showUserInfo() {
         success : function(result) {
             if (result.code == SUCCESS) {
                 var info = result.data;
-                $("#name").html(info.username);
+                $("#name").html(info.nickName);
+                $("#dept").html(info.deptName);
+                $("#level").html(info.empDuties);
+                $("#emp_no").html(info.empNo);
                 console.log(info.username+"威爷是天才!")
             } else {
                 if (result.code == ERROR)

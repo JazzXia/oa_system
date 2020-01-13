@@ -1,6 +1,7 @@
 package com.qtatelier.OASystem.basics.userinfo.service;
 
 import com.qtatelier.OASystem.basics.userinfo.mapper.BlogUserMapper;
+import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.config.ToolRandom;
 import com.qtatelier.config.ToolTime;
 import com.qtatelier.dto.BlogUser;
@@ -32,21 +33,13 @@ public class BlogUserService {
         return blogUserMapper.selectAll();
     }
 
-    /**
-     * 通过id查询
-     * @param blogId
-     * @return
-     */
-    public BlogUser findUserById(String blogId){
-        return blogUserMapper.selectByPrimaryKey(blogId);
-    }
 
     /**
      * 通过用户名查询
      * @param blogUser
      * @return
      */
-    public BlogUser findUserByname(BlogUser blogUser){
+    public BlogUser findUserByname(BlogUser blogUser) {
         return blogUserMapper.selectByUserName(blogUser);
     }
 
@@ -69,7 +62,7 @@ public class BlogUserService {
      * @param userId
      * @return
      */
-    public BlogUser findUserInfo(String userId){
+    public ResBlogUser findUserInfo(String userId){
 
         return blogUserMapper.selectByPrimaryKey(userId);
     }

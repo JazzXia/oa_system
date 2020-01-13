@@ -4,6 +4,8 @@ package com.qtatelier.OASystem.basics.deptinfo.mapper;
 import com.qtatelier.OASystem.basics.deptinfo.model.DeptInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface DeptInfoMapper {
     /**
@@ -53,4 +55,10 @@ public interface DeptInfoMapper {
      * @mbggenerated Sun Jan 12 19:30:26 CST 2020
      */
     int updateByPrimaryKey(DeptInfo record);
+
+    /**
+     * @description 查出所有的部门信息
+     * @return
+     */
+    List<DeptInfo> findAllDeptInfo();
 }

@@ -1,5 +1,7 @@
 package com.qtatelier.OASystem.basics.deptinfo.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qtatelier.OASystem.basics.deptinfo.mapper.DeptInfoMapper;
 import com.qtatelier.OASystem.basics.deptinfo.model.DeptInfo;
 import com.qtatelier.common.OaDesc;
@@ -9,6 +11,8 @@ import com.qtatelier.config.ToolTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author xiaweiwei
@@ -39,6 +43,18 @@ public class DeptInfoService {
             codeEnum = CodeEnum.ERROR_501;
         }
         return codeEnum;
+    }
+
+    /**
+     * @description 查出所有部门信息
+     * @return
+     */
+    public PageInfo<DeptInfo> findAllDeptInfo(Integer pageNum, Integer pageSize){
+        PageHelper.startPage(pageNum == null ? 0 : pageNum.intValue(), pageSize == null ? 10 : pageSize.intValue(),
+                false);
+        List<DeptInfo> list =  deptInfoMapper.findAllDeptInfo();
+        PageInfo<DeptInfo> pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 
 }

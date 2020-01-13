@@ -130,4 +130,10 @@
       dept_order = #{deptOrder,jdbcType=VARCHAR}
     where dept_id = #{deptId,jdbcType=VARCHAR}
   </update>
+
+  <select id="findAllDeptInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dept_info
+  </select>
 </mapper>

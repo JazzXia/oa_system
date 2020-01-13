@@ -1,5 +1,6 @@
 package com.qtatelier.OASystem.web;
 
+import com.github.pagehelper.PageInfo;
 import com.qtatelier.OASystem.basics.deptinfo.model.DeptInfo;
 import com.qtatelier.OASystem.basics.deptinfo.service.DeptInfoService;
 import com.qtatelier.config.CodeEnum;
@@ -13,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,4 +77,27 @@ public class DeptInfoController {
         }
         return resultView;
     }
+
+    @ApiOperation(value = "展示部门", notes = "显示所有的部门")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @GetMapping("/showAll")
+    @UserLoginToken
+    public ResultView findAll(Integer pageNum, Integer pageSize,String token){
+        String logStr = "查出所有的部门";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始",token);
+            PageInfo<DeptInfo> pageInfo = deptInfoService.findAllDeptInfo(pageNum,pageSize);
+            resultView = new ResultView(CodeEnum.SUCCESS, pageInfo);
+        } catch (Exception e) {
+            logger.error(logStr+"失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "展示部门异常",e);
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
 }

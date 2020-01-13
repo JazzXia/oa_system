@@ -2,6 +2,7 @@ package com.qtatelier.OASystem.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
+import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.config.CodeBusiness;
 import com.qtatelier.config.CodeEnum;
 import com.qtatelier.config.ResultView;
@@ -66,7 +67,7 @@ public class BlogUserController{
      * @return
      */
 
-    @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
+    @ApiOperation(value = "获取用户", notes = "获取用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
@@ -77,8 +78,8 @@ public class BlogUserController{
         String logStr = "获取用户";
         ResultView resultView = null;
         try {
-            logger.info(logStr+"开始");
-            BlogUser blogUser = blogUserService.findUserById(userId);
+            logger.info(logStr+"开始={}",token,userId);
+            ResBlogUser blogUser = blogUserService.findUserInfo(userId);
             if(null == blogUser){
                 logger.info(logStr+"失败");
                 return new ResultView(CodeEnum.ERROR_404,"暂无用户信息");
@@ -166,10 +167,10 @@ public class BlogUserController{
     }
 
 
-
     /**
-     * 登录
-     * @param blogUser
+     * @description 用户登录
+     * @param userName
+     * @param password
      * @return
      */
     @ApiOperation(value = "登录", notes = "登录账户")
@@ -178,7 +179,7 @@ public class BlogUserController{
             @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataType = "String")
     })
     @PostMapping("/login")
-    public ResultView login(String userName,String password) {
+    public ResultView login(String userName, String password) {
         BlogUser blogUser = new BlogUser();
         blogUser.setPassword(password);
         blogUser.setUsername(userName);
@@ -203,13 +204,13 @@ public class BlogUserController{
                     redis.set(CodeBusiness.TOKEN_ACCESS_KEY + token, userForBase, CodeBusiness.SESSTION_TIME);
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("user", userForBase);
-                    logger.info(logStr+"登录成功");
-                    resultView = new ResultView(CodeEnum.SUCCESS,"登陆成功", jsonObject);
+                    logger.info(logStr + "登录成功");
+                    resultView = new ResultView(CodeEnum.SUCCESS, "登陆成功", jsonObject);
                     return resultView;
                 }
             }
         } catch (Exception e) {
-            logger.error(logStr+"用户登录失败", e);
+            logger.error(logStr + "用户登录失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "登录系统异常");
         } finally {
             logger.info(logStr + "用户：" + blogUser.getUsername() + "登录结束");
