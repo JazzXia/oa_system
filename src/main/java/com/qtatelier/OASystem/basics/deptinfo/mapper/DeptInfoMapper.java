@@ -61,4 +61,11 @@ public interface DeptInfoMapper {
      * @return
      */
     List<DeptInfo> findAllDeptInfo();
+
+
+    /**
+     * @description 查出数据总数
+     * @return
+     */
+    Long findCount();
 }

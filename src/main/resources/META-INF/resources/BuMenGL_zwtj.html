@@ -17,8 +17,16 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- layui css -->
-    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+
+    <script type="text/javascript" src="bm_list/zwtj.js"></script>
+    <!-- layui js -->
+    <script src="layui/layui.js"></script>
+
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -40,8 +48,8 @@
             <ul> 
                 <li  style="height: 38px; overflow:initial;">
                     <div class="left">部门名称：</div>
-                    <div class="right">  
-                        <select name="city"  lay-verify="">
+                    <div class="right" id ="addEmp">
+                        <select name="dept"  lay-verify="">
                             <option value="">请选择部门</option>
                             <option value="010">技术部</option>
                             <option value="021">人事部</option>
@@ -56,45 +64,45 @@
                         <input type="text" name="title" required lay-verify="required" placeholder="请输入部门职位" autocomplete="off" class="layui-input">
                     </div>
                 </li> 
-                <li>
-                    <div class="left">排序：</div>
-                    <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入部门职位" autocomplete="off" class="layui-input">
-                    </div>
-                </li>
-                <li>
-                    <div class="left">权限：</div> 
-                    <div class="right" style="    width: 640px;"> 
-                            <input type="checkbox" name="" title="特殊备注" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="账户/网站状态" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="公司名称" lay-skin="primary" >
-                            <input type="checkbox" name="" title="FTP/域名" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="ID号" lay-skin="primary" >
-                            <input type="checkbox" name="" title="注册日期" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="ID号密码" lay-skin="primary" >
-                            <input type="checkbox" name="" title="合同金额" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="充值" lay-skin="primary" >
-                            <input type="checkbox" name="" title="联系人" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="电话" lay-skin="primary" >
-                            <input type="checkbox" name="" title="QQ" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="电子邮箱" lay-skin="primary" >
-                            <input type="checkbox" name="" title="地址" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="乙方" lay-skin="primary" >
-                            <input type="checkbox" name="" title="合同编号" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="合同编号" lay-skin="primary" >
-                            <input type="checkbox" name="" title="签署日期" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="续费时间" lay-skin="primary" >
-                            <input type="checkbox" name="" title="续费金额" lay-skin="primary"> 
-                            <input type="checkbox" name="" title="确认函" lay-skin="primary" >
-                            <input type="checkbox" name="" title="seo词" lay-skin="primary">
-                            <input type="checkbox" name="" title="权限" lay-skin="primary">
-                            <input type="checkbox" name="" title="备案号" lay-skin="primary">
-                            <input type="checkbox" name="" title="回访记录" lay-skin="primary">
-                            <input type="checkbox" name="" title="备注" lay-skin="primary">
-                            <input type="checkbox" name="" title="客服质量分" lay-skin="primary">
-                            <input type="checkbox" name="" title="项目完成成绩" lay-skin="primary">  
-                    </div>
-                </li> 
+                <!--<li>-->
+                    <!--<div class="left">排序：</div>-->
+                    <!--<div class="right"> -->
+                        <!--<input type="text" name="title" required lay-verify="required" placeholder="请输入部门职位" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<div class="left">权限：</div> -->
+                    <!--<div class="right" style="    width: 640px;"> -->
+                            <!--<input type="checkbox" name="" title="特殊备注" lay-skin="primary" checked>-->
+                            <!--<input type="checkbox" name="" title="账户/网站状态" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="公司名称" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="FTP/域名" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="ID号" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="注册日期" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="ID号密码" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="合同金额" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="充值" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="联系人" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="电话" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="QQ" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="电子邮箱" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="地址" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="乙方" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="合同编号" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="合同编号" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="签署日期" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="续费时间" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="续费金额" lay-skin="primary"> -->
+                            <!--<input type="checkbox" name="" title="确认函" lay-skin="primary" >-->
+                            <!--<input type="checkbox" name="" title="seo词" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="权限" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="备案号" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="回访记录" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="备注" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="客服质量分" lay-skin="primary">-->
+                            <!--<input type="checkbox" name="" title="项目完成成绩" lay-skin="primary">  -->
+                    <!--</div>-->
+                <!--</li> -->
                 <li>
                     <div class="left">职位简介：</div>
                     <div class="right"> 

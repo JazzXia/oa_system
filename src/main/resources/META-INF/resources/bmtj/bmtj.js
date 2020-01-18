@@ -20,12 +20,18 @@ function addDept() {
         headers: {
             'token':cookie('token')
         },
+        async:false,
         dataType : "json",
         contentType: "application/json; charset=utf-8",
         success : function(result) {
             if (result.code == SUCCESS) {
-                layer.msg(result.msg);
-                //location.href = "/BuMenGL_bmtj.html";
+
+                layer.msg(result.msg,{icon:1});
+
+                setInterval(function(){
+                    location.href = "BuMenGL_bmtj.html"
+                },1000);
+
             } else {
                 var msg = result.msg;
                 if (result.code == ERROR) {
@@ -36,7 +42,7 @@ function addDept() {
             }
         },
         error : function(e) {
-            alert("网络连接异常",e.msg)
+            alert("网络连接异常")
         }
     })
 }

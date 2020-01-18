@@ -52,14 +52,19 @@ function login() {
                 addCookie("token", user.user.token);
                 addCookie("id",user.user.userId);
                 addCookie("roleType", user.user.roleType);
-                location.href = "/index.html";
+
+                layer.msg("登录成功",{icon:1});
+                setInterval(function(){
+                    location.href = "/index.html";
+                },1000);
+
             } else {
                 var msg = result.msg;
                 if (result.code == ERROR) {
                     console.log(msg)
                     $("#pass").next().html(msg);
                 } else {
-                    alert(msg)
+                    layer.msg(msg)
                 }
             }
         },
