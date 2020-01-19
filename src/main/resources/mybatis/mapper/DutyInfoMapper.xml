@@ -53,4 +53,17 @@
     select duty_id, duty_name, duty_description
     from duty_info
   </select>
+
+  <select id="findAll" resultType="com.qtatelier.OASystem.response.DutyInfoRes">
+SELECT
+	di.duty_id,
+	di.duty_name,
+	di.duty_description,
+	din.dept_name
+FROM
+	duty_info di
+	LEFT JOIN link_duty_dept ldd ON di.duty_id = ldd.duty_id
+	LEFT JOIN dept_info din ON din.dept_id = ldd.dept_id
+  </select>
+
 </mapper>

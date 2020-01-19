@@ -1,56 +1,38 @@
 var SUCCESS = 200;
 var ERROR = 404;
 $(function () {
-   // $("#add").click(updateInfo);
     listDeptInfo();
-    $("#addDuty").click(addDuty);
+    showInfoDetail();
 });
 
-//添加职位
-function addDuty() {
-
-    var deptId = $("#addEmp select").val();
-    var dutyName = $("#dutyName").val();
-    var dutyDescription = $("#description").val();
-    var data ={deptId:deptId,dutyDescription:dutyDescription,dutyName:dutyName};
-    var url = "linkDutyInfo/add";
+function showInfoDetail() {
+    var a = GetRequest();
+    var dutyId = a["dutyId"];
+    var data={ dutyId : dutyId};
 
     $.ajax({
-        url : url,
-        data : JSON.stringify(data),
-        type : "post",
+        url : "/linkDutyInfo/detail",
         headers: {
             'token':cookie('token')
         },
-        async:false,
+        data : data,
+        type : "get",
+        async: true,
         dataType : "json",
-        contentType: "application/json; charset=utf-8",
         success : function(result) {
             if (result.code == SUCCESS) {
-
-                layer.msg(result.msg,{icon:1});
-
-                setInterval(function(){
-                    location.href = "BuMenGl_zwtj.html"
-                },1000);
-
+                //var deptId = $("#addEmp select").val(result.data.dutyId);
+                var dutyName = $("#dutyName").val(result.data.dutyName);
+                var dutyDescription = $("#description").html(result.data.dutyDescription);
             } else {
-                var msg = result.msg;
-                if (result.code == ERROR) {
-                    layer.msg(msg);
-                } else {
-                    alert(msg)
-                }
+                layer.msg(result.msg)
             }
         },
         error : function(e) {
-            alert("网络连接异常")
+            layer.msg("权限不足,未登录");
         }
-    })
-
+    });
 }
-
-
 
 
 //展示所有的部门
@@ -72,7 +54,7 @@ function listDeptInfo() {
 
                     $("#addEmp select").append(
                         "<option value='"+info[i].deptId+"'>"+info[i].deptName+"</option>"
-                        );
+                    );
                 }
                 layui.use(['form', 'layedit', 'laydate'], function(){
                     var form = layui.form
@@ -102,4 +84,19 @@ function listDeptInfo() {
             location.href = "login.html";
         }
     })
+}
+
+
+
+function GetRequest() {
+    var url = location.search;
+    var theRequest = new Object();
+    if(url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1])
+        }
+    }
+    return theRequest
 }

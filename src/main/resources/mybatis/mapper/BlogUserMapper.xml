@@ -68,7 +68,7 @@
     br.role_type AS roleType,
     br.role_type_name AS roleTypeName,
     bu.userName AS username,
-    bu.`password` AS password,
+    bu.`password` AS PASSWORD,
     bu.sign AS sign,
     bu.`location` AS location,
     bu.web_url AS webUrl,
@@ -76,8 +76,8 @@
     bu.nick_name AS nickName,
     bu.image_name AS imageName,
     bu.user_email AS userEmail,
-    din.duty_name AS dutyName,
     ei.emp_no AS empNo,
+    din.duty_name AS dutyName,
     di.dept_name AS deptName,
     di.dept_no AS deptNo,
     bu.token AS token
@@ -86,11 +86,10 @@
     LEFT JOIN link_role_user lru ON bu.user_id = lru.user_id
     LEFT JOIN blog_role br ON lru.role_id = br.role_id
     LEFT JOIN link_emp_user leu ON leu.user_id = bu.user_id
-    LEFT JOIN link_emp_dept led ON leu.emp_id = led.emp_id
-    LEFT JOIN dept_info di ON di.dept_id = led.dept_id
     LEFT JOIN emp_info ei ON ei.emp_id = leu.emp_id
-    LEFT JOIN link_duty_dept ldd ON ldd.dept_id = di.dept_id
+    LEFT JOIN link_duty_dept ldd ON ldd.emp_id = ei.emp_id
     LEFT JOIN duty_info din ON din.duty_id = ldd.duty_id
+    LEFT JOIN dept_info di ON di.dept_id = ldd.dept_id
     where bu.user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">

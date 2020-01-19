@@ -49,4 +49,7 @@ public interface LinkDutyDeptMapper
      * @mbg.generated
      */
     int updateByPrimaryKey( LinkDutyDept record );
+
+
+    int deleteByDutyId( String dutyId);
 }

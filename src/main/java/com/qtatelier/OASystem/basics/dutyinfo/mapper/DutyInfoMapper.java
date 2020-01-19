@@ -3,6 +3,7 @@ package com.qtatelier.OASystem.basics.dutyinfo.mapper;
 
 import com.qtatelier.OASystem.basics.dutyinfo.model.DutyInfo;
 import com.qtatelier.OASystem.request.DutyReq;
+import com.qtatelier.OASystem.response.DutyInfoRes;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -49,4 +50,12 @@ public interface DutyInfoMapper
      * @mbg.generated
      */
     int updateByPrimaryKey( DutyInfo record );
+
+
+    /**
+     * @description 查出所有的部门职位
+     * @return
+     */
+    List<DutyInfoRes> findAll();
+
 }

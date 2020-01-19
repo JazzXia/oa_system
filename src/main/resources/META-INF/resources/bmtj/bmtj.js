@@ -37,7 +37,7 @@ function addDept() {
                 if (result.code == ERROR) {
                     layer.msg(msg);
                 } else {
-                    alert(msg)
+                    layer.msg(msg,{icon:0})
                 }
             }
         },
