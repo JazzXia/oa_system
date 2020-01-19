@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -145,6 +146,37 @@ public class DutyInfoController {
 		}
 		return resultView;
 	}
+
+
+	
+	@ApiOperation(value = "按主键修改职务信息", notes = "按主键修改职务信息")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+	})
+	@PutMapping("/updateDutyInfo")
+	@UserLoginToken
+	public ResultView updateDutyInfo(DutyInfoRes dutyInfoRes, String token) {
+		String logStr = "按主键修改职务信息";
+		ResultView resultView = null;
+		try {
+			logger.info(logStr + "开始", token, dutyInfoRes.toString());
+			CodeEnum codeEnum = dutyInfoService.updateInfo(dutyInfoRes);
+			if (codeEnum != CodeEnum.SUCCESS) {
+				logger.error(logStr + "失败");
+				resultView = new ResultView(CodeEnum.ERROR_502, logStr+"失败!");
+			}else {
+				logger.info(logStr+"成功!");
+				resultView = new ResultView(CodeEnum.SUCCESS, logStr+"成功");
+			}
+		} catch (Exception e) {
+			logger.error(logStr + "失败", e);
+			resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+		} finally {
+			logger.info(logStr + "结束");
+		}
+		return resultView;
+	}
+
 
 
 }

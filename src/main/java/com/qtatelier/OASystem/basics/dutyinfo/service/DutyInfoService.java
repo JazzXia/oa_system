@@ -59,12 +59,12 @@ public class DutyInfoService {
 
 
     /**
-     * @description 本质上可以使用pageHelper来进行后端分页,但是前端使用的是layui所以性能有所降低
      * @return
+     * @description 本质上可以使用pageHelper来进行后端分页, 但是前端使用的是layui所以性能有所降低
      */
     public List<DutyInfoRes> selectAll() {
         List<DutyInfoRes> list = dutyInfoMapper.findAll();
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             throw new DeptInfoException("当前部门下无职位信息");
         }
         return list;
@@ -72,16 +72,16 @@ public class DutyInfoService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public CodeEnum deleteDuty(String dutyId){
+    public CodeEnum deleteDuty(String dutyId) {
         CodeEnum codeEnum = CodeEnum.SUCCESS;
         //如果不为空
-        if (StringUtils.isNotBlank(dutyId)){
+        if (StringUtils.isNotBlank(dutyId)) {
             int isSuccess = dutyInfoMapper.deleteByPrimaryKey(dutyId);
-            if (isSuccess<0){
+            if (isSuccess < 0) {
                 return CodeEnum.ERROR_500;
             }
             isSuccess = linkDutyDeptMapper.deleteByDutyId(dutyId);
-            if (isSuccess<0){
+            if (isSuccess < 0) {
                 return CodeEnum.ERROR_500;
             }
             return codeEnum;
@@ -90,16 +90,33 @@ public class DutyInfoService {
     }
 
 
-
-    public DutyInfo selectInfoByKey(String dutyId){
-        if (StringUtils.isNotBlank(dutyId)){
-            DutyInfo dutyInfo= dutyInfoMapper.selectByPrimaryKey(dutyId);
-            if (dutyInfo == null){
+    public DutyInfo selectInfoByKey(String dutyId) {
+        if (StringUtils.isNotBlank(dutyId)) {
+            DutyInfo dutyInfo = dutyInfoMapper.selectByPrimaryKey(dutyId);
+            if (dutyInfo == null) {
                 throw new DeptInfoException("当前无数据!!!");
             }
             return dutyInfo;
         }
         throw new DeptInfoException("当前id为空!!!");
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public CodeEnum updateInfo(DutyInfoRes dutyInfoRes) {
+        CodeEnum codeEnum = CodeEnum.SUCCESS;
+        if (dutyInfoRes != null) {
+            int isSuccess = dutyInfoMapper.updateByPrimaryKeySelective(dutyInfoRes);
+            if (isSuccess < 0) {
+                return CodeEnum.ERROR_500;
+            }
+            isSuccess = linkDutyDeptMapper.updateByPrimaryKeySelective(dutyInfoRes);
+            if (isSuccess < 0) {
+                return CodeEnum.ERROR_500;
+            }
+            return codeEnum;
+        }
+        throw new DeptInfoException("当前职务对象为空");
     }
 
 }

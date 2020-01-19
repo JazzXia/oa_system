@@ -58,4 +58,12 @@ public interface DutyInfoMapper
      */
     List<DutyInfoRes> findAll();
 
+
+    /**
+     *
+     * @param dutyInfoRes
+     * @return
+     */
+    int updateByPrimaryKeySelective(DutyInfoRes dutyInfoRes);
+
 }

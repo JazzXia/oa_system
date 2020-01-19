@@ -3,6 +3,7 @@ package com.qtatelier.OASystem.basics.linkdutydept.mapper;
 
 import com.qtatelier.OASystem.basics.linkdutydept.model.LinkDutyDept;
 import com.qtatelier.OASystem.request.DutyReq;
+import com.qtatelier.OASystem.response.DutyInfoRes;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public interface LinkDutyDeptMapper
      */
     int updateByPrimaryKey( LinkDutyDept record );
 
-
     int deleteByDutyId( String dutyId);
+
+    int updateByPrimaryKeySelective(DutyInfoRes dutyInfoRes);
 }
