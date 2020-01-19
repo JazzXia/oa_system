@@ -3,7 +3,15 @@ var ERROR = 404;
 $(function () {
    // $("#add").click(updateInfo);
     listDeptInfo();
+    $("#addDuty").click(addDuty);
 });
+
+//添加职位
+function addDuty() {
+
+}
+
+
 
 
 //展示所有的部门
