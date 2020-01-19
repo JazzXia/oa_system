@@ -50,12 +50,8 @@
                     <div class="left">部门名称：</div>
                     <div class="right" id ="addEmp">
                         <select name="dept"  lay-verify="">
-                            <option value="">请选择部门</option>
-                            <option value="010">技术部</option>
-                            <option value="021">人事部</option>
-                            <option value="0571">客服部</option>
-                            <option value="0571">营销部</option>
-                        </select> 
+
+                        </select>
                     </div>
                 </li>
                 <li>
@@ -129,24 +125,7 @@
 
 </html>
 <script>
-layui.use(['form', 'layedit', 'laydate'], function(){
-    var form = layui.form
-    ,layer = layui.layer
-    ,layedit = layui.layedit
-    ,laydate = layui.laydate;
-});
-layui.use('laydate', function(){
-  var laydate = layui.laydate; 
-  //年选择器 
-  laydate.render({
-    elem: '#test2'
-  });
-   //时间选择器
-   laydate.render({
-    elem: '#test2_r'
-    ,type: 'time'
-  });
-});
+
 
 
 </script>

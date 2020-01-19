@@ -56,9 +56,8 @@ function showUserInfo() {
                 var info = result.data;
                 $("#name").html(info.nickName);
                 $("#dept").html(info.deptName);
-                $("#level").html(info.empDuties);
+                $("#level").html(info.dutyName);
                 $("#emp_no").html(info.empNo);
-                console.log(info.username+"威爷是天才!")
             } else {
                 if (result.code == ERROR)
                 {

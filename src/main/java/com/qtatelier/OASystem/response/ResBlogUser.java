@@ -32,7 +32,7 @@ public class ResBlogUser {
     private String deptNo;
     private String deptName;
     private String empNo;
-    private String empDuties;
+    private String dutyName;
 
     @Override
     public String toString() {
