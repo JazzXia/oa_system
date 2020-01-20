@@ -17,8 +17,16 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- layui css -->
-    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+
+    <script type="text/javascript" src="yglist/ygtj.js"></script>
+    <!-- layui js -->
+    <script src="layui/layui.js"></script>
+
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -33,7 +41,7 @@
         </div>
         <!-- 内容 -->    
         <div class="wenxts_ke">
-            <p><i>温馨提示：</i>请认真核对员工信息正确无误后再确定添加，并上传员工的对应简历图片,默认密码是:AC(FDS54)*844,可修改</p>
+            <p><i>温馨提示：</i>请认真核对员工信息正确无误后再确定添加，并上传员工的对应简历图片,默认密码是:aqDDXc213Cvz,可修改</p>
         </div>
         <div class="kehubh_tj_k">
             <form class="layui-form layui-form-pane" action="">
@@ -41,13 +49,13 @@
                 <li>
                     <div class="left">用户名：</div>
                     <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">   
+                        <input type="text" id="userName" name="title" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
                     <div class="left">真实姓名：</div>
                     <div class="right">
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
+                        <input type="text" id="nickName" name="title" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
@@ -85,26 +93,16 @@
                 <!--</li>-->
                 <li style="height: 38px; overflow:initial;">
                     <div class="left">部门：</div>
-                    <div class="right"> 
-                        <select name="city" lay-verify="">
-                            <option value="">请选择部门</option>
-                            <option value="010">技术部</option>
-                            <option value="021">人事部</option>
-                            <option value="0571">客服部</option>
-                            <option value="0571">营销部</option>
+                    <div class="right" id="deptinfo">
+                        <select name="dept" lay-verify="" lay-filter="">
                         </select> 
                     </div>
                 </li>
                 <!--职位是选择的不是添加的!!!!-->
                 <li style="height: 38px; overflow:initial;">
                     <div class="left">部门职位：</div>
-                    <div class="right">
-                        <select name="city" lay-verify="">
-                            <option value="">请选择职位</option>
-                            <option value="010">技术部</option>
-                            <option value="021">人事部</option>
-                            <option value="0571">客服部</option>
-                            <option value="0571">营销部</option>
+                    <div class="right" id="dutyinfo">
+                        <select name="duty" lay-verify="" lay-filter="dutyInfo">
                         </select>
                     </div>
                 </li>
@@ -130,7 +128,7 @@
                 <li>
                     <div class="left"> &nbsp;</div>
                     <div class="right"> 
-                        <button class="button_qr">确定添加</button>
+                        <button class="button_qr" type="button" id="addEmp">确定添加</button>
                     </div>
                 </li>
             </ul> 
@@ -152,10 +150,4 @@
 
 </html>
 <script>
-        layui.use(['form', 'layedit', 'laydate'], function(){
-          var form = layui.form
-          ,layer = layui.layer
-          ,layedit = layui.layedit
-          ,laydate = layui.laydate;
-        });
-        </script>
+</script>

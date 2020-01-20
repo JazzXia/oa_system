@@ -119,4 +119,12 @@ public class DutyInfoService {
         throw new DeptInfoException("当前职务对象为空");
     }
 
+
+    public List<DutyInfoRes> findInfoByDeptId(String deptId){
+        if (StringUtils.isNotBlank(deptId)){
+            return dutyInfoMapper.findInfoByDeptId(deptId);
+        }
+        throw new DeptInfoException("未选择部门");
+    }
+
 }

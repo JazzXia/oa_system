@@ -93,7 +93,7 @@
     update link_duty_dept
     <set >
       <if test="empId != null" >
-        dept_id = #{empId,jdbcType=VARCHAR}
+        emp_id = #{empId,jdbcType=VARCHAR}
       </if>
     </set>
     where duty_id = #{dutyId,jdbcType=VARCHAR}

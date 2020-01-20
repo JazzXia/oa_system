@@ -57,15 +57,15 @@ public interface DeptInfoMapper {
     int updateByPrimaryKey(DeptInfo record);
 
     /**
-     * @description 查出所有的部门信息
      * @return
+     * @description 查出所有的部门信息
      */
     List<DeptInfo> findAllDeptInfo();
 
 
     /**
-     * @description 查出数据总数
      * @return
+     * @description 查出数据总数
      */
     Long findCount();
 }

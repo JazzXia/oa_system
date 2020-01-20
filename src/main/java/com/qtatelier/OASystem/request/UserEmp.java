@@ -21,10 +21,6 @@ public class UserEmp {
 
 	private String location;
 
-	private String webUrl;
-
-	private String callself;
-
 	private String empId;
 
 	private String empNo;
@@ -45,4 +41,7 @@ public class UserEmp {
 	private String dutyId;
 	private String roleId;
 	private String token;
+	private String webUrl;
+	private String callself;
+
 }

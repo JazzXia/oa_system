@@ -22,15 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -42,7 +39,7 @@ import java.util.List;
 @RestController
 @Api(value = "用户信息", tags = "用户信息列表")
 @RequestMapping("/role")
-public class BlogUserController{
+public class BlogUserController {
 
     //日志
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -56,18 +53,13 @@ public class BlogUserController{
     @Autowired
     private ToolRedis redis;
 
-    @Resource
-    RedisTemplate redisTemplate; //k-v都是对象的
-
-    @Value("#{'salt'}")
+    @Value("${login.salt}")
     private String salt;
 
 
     /**
-     *
-     * @description 获取用户信息
-     *
      * @return
+     * @description 获取用户信息
      */
 
     @ApiOperation(value = "获取用户", notes = "获取用户")
@@ -76,21 +68,21 @@ public class BlogUserController{
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @GetMapping("/info")
-    @SystemControllerLog(description = "登录并展示当前信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @SystemControllerLog(description = "登录并展示当前信息", optType = CodeBusiness.OPT_TYPE.SEARCH_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @UserLoginToken
-    public ResultView getUserInfo(String userId,String token) {
+    public ResultView getUserInfo(String userId, String token) {
         String logStr = "获取用户";
         ResultView resultView = null;
         try {
-            logger.info(logStr+"开始={}",token,userId);
+            logger.info(logStr + "开始={}", token, userId);
             ResBlogUser blogUser = blogUserService.findUserInfo(userId);
-            if(null == blogUser){
-                logger.info(logStr+"失败");
-                return new ResultView(CodeEnum.ERROR_404,"暂无用户信息");
+            if (null == blogUser) {
+                logger.info(logStr + "失败");
+                return new ResultView(CodeEnum.ERROR_404, "暂无用户信息");
             }
-            return new ResultView(CodeEnum.SUCCESS,"获取用户成功",blogUser);
+            return new ResultView(CodeEnum.SUCCESS, "获取用户成功", blogUser);
         } catch (Exception e) {
-            logger.error(logStr+"失败", e);
+            logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "获取用户异常");
         } finally {
 
@@ -100,13 +92,9 @@ public class BlogUserController{
     }
 
 
-
-
     /**
-     *
-     * @description 获取用户列表
-     *
      * @return
+     * @description 获取用户列表
      */
 
     @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
@@ -114,21 +102,21 @@ public class BlogUserController{
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @GetMapping("/list")
-    @SystemControllerLog(description = "获取所有用户信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @SystemControllerLog(description = "获取所有用户信息", optType = CodeBusiness.OPT_TYPE.SEARCH_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @UserLoginToken
     public ResultView getUser(String token) {
         String logStr = "获取所有用户,token={}";
         ResultView resultView = null;
         try {
-            logger.info(logStr+"开始",token);
+            logger.info(logStr + "开始", token);
             List<BlogUser> list = blogUserService.findAll();
-            if(list.isEmpty()){
-                logger.info(logStr+"失败",token);
-                return new ResultView(CodeEnum.ERROR_404,"暂无用户信息");
+            if (list.isEmpty()) {
+                logger.info(logStr + "失败", token);
+                return new ResultView(CodeEnum.ERROR_404, "暂无用户信息");
             }
-            return new ResultView(CodeEnum.SUCCESS,"获取所有用户成功",list);
+            return new ResultView(CodeEnum.SUCCESS, "获取所有用户成功", list);
         } catch (Exception e) {
-            logger.error(logStr+"失败", e);
+            logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "获取所有用户异常");
         } finally {
 
@@ -138,46 +126,49 @@ public class BlogUserController{
     }
 
 
-
     /**
-     * @description 新增用户
      * @return
+     * @description 新增用户
      */
     @ApiOperation(value = "添加用户", notes = "添加新用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
-    @SystemControllerLog(description = "新增用户",optType = CodeBusiness.OPT_TYPE.ADD_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @SystemControllerLog(description = "新增用户", optType = CodeBusiness.OPT_TYPE.ADD_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @PostMapping("/add")
     @UserLoginToken
-    public ResultView insertUser(@RequestBody UserReq userReq,String token) {
+    public ResultView insertUser(@RequestBody UserReq userReq, String token) {
 
         String logStr = "新增用户,BlogUser={}";
         ResultView resultView = null;
         try {
             UserEmp userEmp = new UserEmp();
-            userEmp.setDeptId( userReq.getDeptId() );
-            userEmp.setDutyId( userReq.getDutyId() );
-            userEmp.setRoleId( userReq.getRoleId() );
+            userEmp.setDeptId(userReq.getDeptId());
+            userEmp.setDutyId(userReq.getDutyId());
+            userEmp.setRoleId(userReq.getRoleId());
             //真实姓名
-            userEmp.setNickName( userReq.getNickName() );
+            userEmp.setNickName(userReq.getNickName());
             //用户名
-            userEmp.setUsername( userReq.getUsername() );
-            userEmp.setImageName( userReq.getImageName() );
-            userEmp.setUserEmail( userReq.getUserEmail() );
-            userEmp.setRoleType( userReq.getRoleType() );
-            userEmp.setRoleTypeName( userReq.getRoleTypeName() );
-            logger.info(logStr + "开始",userEmp);
-            //int count = blogUserService.insertUser(blogUser);
-            //if(count != 1){
-            CodeEnum codeEnum = blogUserService.insertUser( userEmp );
-                logger.error(logStr+"新增用户不能为空");
+            userEmp.setUsername(userReq.getUsername());
+            userEmp.setImageName(userReq.getImageName());
+            userEmp.setUserEmail(userReq.getUserEmail());
+            userEmp.setRoleType(userReq.getRoleType());
+            userEmp.setRoleTypeName(userReq.getRoleTypeName());
+            //性别
+            userEmp.setCallself(userReq.getCallself());
+            //网站
+            userEmp.setWebUrl(userReq.getWebUrl());
+            logger.info(logStr + "开始", userEmp);
+
+            CodeEnum codeEnum = blogUserService.insertUser(userEmp);
+            if (codeEnum != CodeEnum.SUCCESS) {
+                logger.error(logStr + "新增用户不能为空");
                 resultView = new ResultView(CodeEnum.ERROR_404, "新增用户不能为空");
-            //}
-            resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功");
+            }
+            resultView = new ResultView(CodeEnum.SUCCESS, "新增用户成功");
             return resultView;
         } catch (Exception e) {
-            logger.error(logStr+"失败", e);
+            logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "新增用户异常");
         } finally {
             logger.info(logStr + "结束");
@@ -187,17 +178,17 @@ public class BlogUserController{
 
 
     /**
-     * @description 用户登录
      * @param userName
      * @param password
      * @return
+     * @description 用户登录
      */
     @ApiOperation(value = "登录", notes = "登录账户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataType = "String")
     })
-    @SystemControllerLog(description = "用户登录",optType = CodeBusiness.OPT_TYPE.LOGIN_CODE,moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
+    @SystemControllerLog(description = "用户登录", optType = CodeBusiness.OPT_TYPE.LOGIN_CODE, moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
     @PostMapping("/login")
     public ResultView login(String userName, String password) {
         BlogUser blogUser = new BlogUser();
@@ -240,33 +231,33 @@ public class BlogUserController{
 
 
     /**
-     * @description 登出
      * @param
      * @return
+     * @description 登出
      */
     @ApiOperation(value = "登出", notes = "退出账号")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
-    @SystemControllerLog(description = "退出账号",optType = CodeBusiness.OPT_TYPE.LOGOUT_CODE,moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
+    @SystemControllerLog(description = "退出账号", optType = CodeBusiness.OPT_TYPE.LOGOUT_CODE, moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
     @GetMapping("/logout")
     @UserLoginToken
     public ResultView logout(String token) {
         String logStr = "用户退出";
         ResultView resultView = null;
         try {
-            logger.info(logStr + "开始",token);
+            logger.info(logStr + "开始", token);
             boolean flag = redis.delKey(CodeBusiness.TOKEN_ACCESS_KEY);
-            if (flag){
-                resultView =  new ResultView(CodeEnum.SUCCESS,"退出成功");
-            }else {
-                resultView = new ResultView(CodeEnum.ERROR_500,"退出失败");
+            if (flag) {
+                resultView = new ResultView(CodeEnum.SUCCESS, "退出成功");
+            } else {
+                resultView = new ResultView(CodeEnum.ERROR_500, "退出失败");
             }
 
             return resultView;
         } catch (Exception e) {
-            logger.error(logStr+"失败", e);
-            resultView = new ResultView(CodeEnum.ERROR_500, "退出异常",e);
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, "退出异常", e);
         } finally {
             logger.info(logStr + "结束");
         }

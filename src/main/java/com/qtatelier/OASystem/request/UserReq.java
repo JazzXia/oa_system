@@ -22,4 +22,6 @@ public class UserReq {
 	private String dutyId;
 	private String roleId;
 	private String token;
+	private String webUrl;
+	private String callself;
 }

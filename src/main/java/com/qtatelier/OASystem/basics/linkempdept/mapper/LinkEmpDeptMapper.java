@@ -56,5 +56,5 @@ public interface LinkEmpDeptMapper {
     int updateByPrimaryKey(LinkEmpDept record);
 
 
-    int insertInfo( UserEmp userEmp );
+    int insertInfo(UserEmp userEmp);
 }

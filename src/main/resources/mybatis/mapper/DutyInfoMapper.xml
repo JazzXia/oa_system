@@ -85,5 +85,17 @@ FROM
     where duty_id = #{dutyId,jdbcType=VARCHAR}
   </update>
 
+  <select id="findInfoByDeptId" parameterType="java.lang.String" resultType="com.qtatelier.OASystem.response.DutyInfoRes">
+    SELECT
+        di.duty_id AS dutyId,
+        di.duty_name AS dutyName
+    FROM
+        duty_info di
+        LEFT JOIN link_duty_dept ldd ON di.duty_id = ldd.duty_id
+    WHERE
+        ldd.dept_id = #{deptId}
+        AND ldd.emp_id IS NULL
+  </select>
+
 
 </mapper>

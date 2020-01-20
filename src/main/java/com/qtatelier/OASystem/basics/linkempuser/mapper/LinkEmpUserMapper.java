@@ -56,5 +56,5 @@ public interface LinkEmpUserMapper {
     int updateByPrimaryKey(LinkEmpUser record);
 
 
-    int insertInfo( UserEmp record);
+    int insertInfo(UserEmp record);
 }

@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,37 +33,37 @@ import java.util.List;
 @RequestMapping("optLog")
 public class OptLogController {
 
-	//日志
-	private Logger logger = LoggerFactory.getLogger(getClass());
+    //日志
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	private OptLogService optLogService;
+    @Autowired
+    private OptLogService optLogService;
 
-	@ApiOperation(value = "获取日志", notes = "获取日志")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
-	})
-	@GetMapping("/info")
-	@SystemControllerLog(description = "获取日志信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.LOG_MODULE)
-	@UserLoginToken
-	public ResultView getUserInfo( OptLog optLog,String token) {
-		String logStr = "获取日志";
-		ResultView resultView = null;
-		try {
-			logger.info(logStr+"开始={}",token,optLog.toString());
-			List<OptLog> list  = optLogService.selectByAccoutId(optLog);
-			if(list.isEmpty()){
-				logger.info(logStr+"失败");
-				return new ResultView( CodeEnum.ERROR_404,"距离上次操作超过24小时无数据!!");
-			}
-			return new ResultView(CodeEnum.SUCCESS,"获取日志成功",list);
-		} catch (Exception e) {
-			logger.error(logStr+"失败", e);
-			resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
-		} finally {
+    @ApiOperation(value = "获取日志", notes = "获取日志")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @GetMapping("/info")
+    @SystemControllerLog(description = "获取日志信息", optType = CodeBusiness.OPT_TYPE.SEARCH_CODE, moduleName = CodeBusiness.MODULE_NAME.LOG_MODULE)
+    @UserLoginToken
+    public ResultView getUserInfo(OptLog optLog, String token) {
+        String logStr = "获取日志";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始={}", token, optLog.toString());
+            List<OptLog> list = optLogService.selectByAccoutId(optLog);
+            if (list.isEmpty()) {
+                logger.info(logStr + "失败");
+                return new ResultView(CodeEnum.ERROR_404, "距离上次操作超过24小时无数据!!");
+            }
+            return new ResultView(CodeEnum.SUCCESS, "获取日志成功", list);
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
 
-			logger.info(logStr + "结束");
-		}
-		return resultView;
-	}
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
 }

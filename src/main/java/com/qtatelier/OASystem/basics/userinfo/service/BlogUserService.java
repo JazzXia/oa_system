@@ -2,10 +2,8 @@ package com.qtatelier.OASystem.basics.userinfo.service;
 
 import com.qtatelier.OASystem.basics.empinfo.mapper.EmpInfoMapper;
 import com.qtatelier.OASystem.basics.linkdutydept.mapper.LinkDutyDeptMapper;
-import com.qtatelier.OASystem.basics.linkdutydept.model.LinkDutyDept;
 import com.qtatelier.OASystem.basics.linkempdept.mapper.LinkEmpDeptMapper;
 import com.qtatelier.OASystem.basics.linkempuser.mapper.LinkEmpUserMapper;
-import com.qtatelier.OASystem.basics.linkempuser.model.LinkEmpUser;
 import com.qtatelier.OASystem.basics.linkroleuser.mapper.LinkRoleUserMapper;
 import com.qtatelier.OASystem.basics.userinfo.mapper.BlogUserMapper;
 import com.qtatelier.OASystem.request.UserEmp;
@@ -18,7 +16,6 @@ import com.qtatelier.config.ToolTime;
 import com.qtatelier.dto.BlogUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
@@ -49,10 +46,10 @@ public class BlogUserService {
     @Autowired
     private LinkDutyDeptMapper linkDutyDeptMapper;
 
-    @Value("#{'salt'}")
+    @Value("${login.salt}")
     private String salt;
 
-    @Value( "#{'password'}" )
+    @Value( "${login.password}" )
     private String defaultPassword;
 
     @Cacheable(value = "ROLE")
@@ -92,7 +89,7 @@ public class BlogUserService {
         userEmp.setLinkIdUser( linkIdUser );
         userEmp.setLinkIdRole( linkIdRole );
         userEmp.setUserId(userId);
-        userEmp.setPassword(DigestUtils.md5Hex(salt + defaultPassword.trim()));
+        userEmp.setPassword(DigestUtils.md5Hex(salt + defaultPassword));
         int isSuccess =  blogUserMapper.insertInfo(userEmp);
         if(isSuccess < 1){
             if (isSuccess < 0) {

@@ -157,7 +157,7 @@ function showAllList(info) {
                                 }
                             });
                         }
-                            setInterval(function () {
+                            setTimeout(function () {
                                 location.href = "BuMenGL_list.html";
                             }, 1000);
                         }
