@@ -2,9 +2,13 @@ package com.qtatelier.OASystem.basics.optlog.service;
 
 import com.qtatelier.OASystem.basics.optlog.mapper.OptLogMapper;
 import com.qtatelier.OASystem.basics.optlog.model.OptLog;
+import com.qtatelier.OASystem.thread.OptLogException;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @description: 插入
@@ -27,4 +31,14 @@ public class OptLogService {
     public int deleteInfoByLike(String operTime){
         return optLogMapper.deleteInfoByLike( operTime );
     }
+
+
+
+    public List<OptLog> selectByAccoutId(OptLog optLog){
+        if(StringUtils.isNotBlank( optLog.getAccountId() )){
+           return optLogMapper.selectByAccoutId( optLog );
+        }
+        throw new OptLogException( "当前用户未登录,无法查看" );
+    }
+
 }

@@ -60,16 +60,17 @@
                 <li>
                     <div class="left">性别：</div>
                     <div class="right">
-                            <input type="radio" name="sex" value="nan" title="男">
-                            <input type="radio" name="sex" value="nv" title="女" checked>
+                            <input type="radio" name="sex" value="nan" title="男" checked>
+                            <input type="radio" name="sex" value="nv" title="女" >
                     </div>
                 </li>
-                <li>
-                    <div class="left">工号：</div>
-                    <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入工号" autocomplete="off" class="layui-input">
-                    </div>
-                </li>
+                <!--工号是自动生成的-->
+                <!--<li>-->
+                    <!--<div class="left">工号：</div>-->
+                    <!--<div class="right"> -->
+                        <!--<input type="text" name="title" required lay-verify="required" placeholder="请输入工号" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</li>-->
                 <li style="height: 38px; overflow:initial;">
                     <div class="left">部门：</div>
                     <div class="right"> 
@@ -82,18 +83,25 @@
                         </select> 
                     </div>
                 </li>
-                <li>
+                <!--职位是选择的不是添加的!!!!-->
+                <li style="height: 38px; overflow:initial;">
                     <div class="left">部门职位：</div>
                     <div class="right">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请填写部门职位" autocomplete="off" class="layui-input">
+                        <select name="city" lay-verify="">
+                            <option value="">请选择职位</option>
+                            <option value="010">技术部</option>
+                            <option value="021">人事部</option>
+                            <option value="0571">客服部</option>
+                            <option value="0571">营销部</option>
+                        </select>
                     </div>
                 </li>
-                <li>
-                    <div class="left">排序：</div>
-                    <div class="right">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请填写部门职位" autocomplete="off" class="layui-input">
-                    </div>
-                </li>
+                <!--<li>-->
+                    <!--<div class="left">排序：</div>-->
+                    <!--<div class="right">-->
+                            <!--<input type="text" name="title" required lay-verify="required" placeholder="请填写部门职位" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</li>-->
                 <li>
                     <div class="left">排序：</div>
                     <div class="right">
@@ -103,8 +111,8 @@
                 <li>
                     <div class="left"> 添加身份：</div>
                     <div class="right">
-                            <input type="checkbox" name="" title="经理" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="管理员" lay-skin="primary"> 
+                            <!--<input type="checkbox" name="" title="经理" lay-skin="primary" checked>-->
+                            <input type="checkbox" name="test" title="管理员" id="box" lay-skin="primary" checked>
                     </div>
                 </li>
                 <li>

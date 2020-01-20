@@ -49,4 +49,7 @@ public interface OptLogMapper {
 
 
     int deleteInfoByLike(String operTime);
+
+
+    List<OptLog> selectByAccoutId(OptLog optLog);
 }
