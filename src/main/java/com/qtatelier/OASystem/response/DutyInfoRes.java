@@ -15,4 +15,5 @@ public class DutyInfoRes {
     private String dutyName;
     private String dutyDescription;
     private String deptName;
+    private String deptId;
 }

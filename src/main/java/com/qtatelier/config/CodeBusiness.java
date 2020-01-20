@@ -66,9 +66,9 @@ public class CodeBusiness {
         /**用户模块*/
         String USER_MODULE = "用户模块";
         /**博文模块*/
-        String BLOG_MODULE = "博文模块";
-        /**评论模块*/
-        String COMMENT_MODULE = "评论模块";
+        String DEPT_MODULE = "部门模块";
+        /**职位模块*/
+        String DUTY_MODULE = "职位模块";
         /**日志模块*/
         String LOG_MODULE = "日志模块";
     }

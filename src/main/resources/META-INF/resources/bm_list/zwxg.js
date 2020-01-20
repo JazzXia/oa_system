@@ -3,7 +3,58 @@ var ERROR = 404;
 $(function () {
     listDeptInfo();
     showInfoDetail();
+    $("#addDuty").click(updateInfo);
 });
+
+
+function updateInfo(){
+    var a = GetRequest();
+    var dutyId = a["dutyId"];
+    console.log(dutyId);
+    var deptId = $("#addEmp select").val();
+    console.log(deptId);
+    var dutyName = $("#dutyName").val();
+    console.log(dutyName);
+    var dutyDescription = $("#description").val();
+    console.log(dutyDescription);
+    var data ={deptId:deptId,dutyDescription:dutyDescription,dutyName:dutyName,dutyId:dutyId};
+    var url = "linkDutyInfo/updateDutyInfo";
+
+    $.ajax({
+        url : url,
+        data : JSON.stringify(data),
+        type : "put",
+        headers: {
+            'token':cookie('token')
+        },
+        async:false,
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        success : function(result) {
+            if (result.code == SUCCESS) {
+
+                layer.msg(result.msg,{icon:1});
+
+                setInterval(function(){
+                    location.href = "BuMenGl_zwxg.html?dutyId="+dutyId;
+                },1000);
+
+            } else {
+                var msg = result.msg;
+                if (result.code == ERROR) {
+                    layer.msg(msg,{icon:2});
+                } else {
+                    layer.msg(msg)
+                }
+            }
+        },
+        error : function(e) {
+            alert("网络连接异常")
+        }
+    })
+
+}
+
 
 function showInfoDetail() {
     var a = GetRequest();

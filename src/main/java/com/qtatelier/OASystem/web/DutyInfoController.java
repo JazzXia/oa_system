@@ -4,6 +4,8 @@ import com.qtatelier.OASystem.basics.dutyinfo.model.DutyInfo;
 import com.qtatelier.OASystem.basics.dutyinfo.service.DutyInfoService;
 import com.qtatelier.OASystem.request.DutyReq;
 import com.qtatelier.OASystem.response.DutyInfoRes;
+import com.qtatelier.common.aop.SystemControllerLog;
+import com.qtatelier.config.CodeBusiness;
 import com.qtatelier.config.CodeEnum;
 import com.qtatelier.config.ResultView;
 import com.qtatelier.dev_util.commons.annotation.UserLoginToken;
@@ -52,6 +54,7 @@ public class DutyInfoController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
 	})
+	@SystemControllerLog(description = "新增职位",optType = CodeBusiness.OPT_TYPE.ADD_CODE,moduleName = CodeBusiness.MODULE_NAME.DUTY_MODULE)
 	@PostMapping("/add")
 	@UserLoginToken
 	public ResultView insertUser(@RequestBody DutyReq dutyInfo,String token) {
@@ -81,6 +84,7 @@ public class DutyInfoController {
 			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
 	})
 	@GetMapping("/showAll")
+	@SystemControllerLog(description = "查出每个部门所有的职位",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.DUTY_MODULE)
 	@UserLoginToken
 	public ResultView findAll(String token){
 		String logStr = "查出每个部门所有的职位";
@@ -102,6 +106,7 @@ public class DutyInfoController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
 	})
+	@SystemControllerLog(description = "删除当前职位",optType = CodeBusiness.OPT_TYPE.DELETE_CODE,moduleName = CodeBusiness.MODULE_NAME.DUTY_MODULE)
 	@DeleteMapping("/delete/{deptId}")
 	@UserLoginToken
 	public ResultView deleteByKey(@PathVariable("deptId") String deptId, String token){
@@ -129,6 +134,7 @@ public class DutyInfoController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
 	})
+	@SystemControllerLog(description = "查询单条信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.DUTY_MODULE)
 	@GetMapping("/detail")
 	@UserLoginToken
 	public ResultView findInfo(String dutyId,String token){
@@ -153,9 +159,10 @@ public class DutyInfoController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
 	})
+	@SystemControllerLog(description = "按主键修改职务信息",optType = CodeBusiness.OPT_TYPE.UPDATE_CODE,moduleName = CodeBusiness.MODULE_NAME.DUTY_MODULE)
 	@PutMapping("/updateDutyInfo")
 	@UserLoginToken
-	public ResultView updateDutyInfo(DutyInfoRes dutyInfoRes, String token) {
+	public ResultView updateDutyInfo(@RequestBody DutyInfoRes dutyInfoRes, String token) {
 		String logStr = "按主键修改职务信息";
 		ResultView resultView = null;
 		try {

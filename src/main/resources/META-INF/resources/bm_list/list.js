@@ -82,7 +82,6 @@ function showAllList(info) {
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     var data={};
-                    console.log(obj.data.yx)
                     $.ajax({
                         url : "/linkDutyInfo/delete/"+obj.data.yx,
                         headers: {
@@ -118,7 +117,7 @@ function showAllList(info) {
                     skin: 'layui-layer-molv',
                     title: '修改职位信息',
                     content:['/BuMenGL_zwxg.html'+'?dutyId='+obj.data.yx,'true'] ,//不允许出现滚动条
-                    area:['700px', '600px']
+                    area:['800px', '600px']
                 });
                 //layer.msg('修改操作');
             }

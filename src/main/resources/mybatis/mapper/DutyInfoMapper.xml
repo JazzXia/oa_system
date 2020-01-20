@@ -79,7 +79,7 @@ FROM
         duty_name = #{dutyName,jdbcType=VARCHAR},
       </if>
       <if test="dutyDescription != null" >
-        duty_description = #{dutyDescription,jdbcType=VARCHAR},
+        duty_description = #{dutyDescription,jdbcType=VARCHAR}
       </if>
     </set>
     where duty_id = #{dutyId,jdbcType=VARCHAR}

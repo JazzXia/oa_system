@@ -3,6 +3,8 @@ package com.qtatelier.OASystem.web;
 import com.github.pagehelper.PageInfo;
 import com.qtatelier.OASystem.basics.deptinfo.model.DeptInfo;
 import com.qtatelier.OASystem.basics.deptinfo.service.DeptInfoService;
+import com.qtatelier.common.aop.SystemControllerLog;
+import com.qtatelier.config.CodeBusiness;
 import com.qtatelier.config.CodeEnum;
 import com.qtatelier.config.ResultView;
 import com.qtatelier.dev_util.commons.annotation.UserLoginToken;
@@ -52,6 +54,7 @@ public class DeptInfoController {
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @PostMapping("/add")
+    @SystemControllerLog(description = "添加部门",optType = CodeBusiness.OPT_TYPE.ADD_CODE,moduleName = CodeBusiness.MODULE_NAME.DEPT_MODULE)
     @UserLoginToken
     public ResultView insertDept(@RequestBody DeptInfo deptInfo, @ApiIgnore String token) {
 
@@ -85,6 +88,7 @@ public class DeptInfoController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "查出所有的部门",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.DEPT_MODULE)
     @GetMapping("/showAll")
     @UserLoginToken
     public ResultView findAll(Integer pageNum, Integer pageSize,String token){
@@ -109,6 +113,7 @@ public class DeptInfoController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "删除部门",optType = CodeBusiness.OPT_TYPE.DELETE_CODE,moduleName = CodeBusiness.MODULE_NAME.DEPT_MODULE)
     @DeleteMapping("/delete/{deptId}")
     @UserLoginToken
     public ResultView deleteDept(@PathVariable("deptId") String deptId, String token) {
@@ -146,6 +151,7 @@ public class DeptInfoController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "按主键查询部门信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.DEPT_MODULE)
     @GetMapping("/detail")
     @UserLoginToken
     public ResultView findInfo(String deptId,String token){
@@ -170,6 +176,7 @@ public class DeptInfoController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "按主键修改部门信息",optType = CodeBusiness.OPT_TYPE.UPDATE_CODE,moduleName = CodeBusiness.MODULE_NAME.DEPT_MODULE)
     @PutMapping("/updateDeptInfo")
     @UserLoginToken
     public ResultView updateDeptInfo(DeptInfo deptInfo, String token) {

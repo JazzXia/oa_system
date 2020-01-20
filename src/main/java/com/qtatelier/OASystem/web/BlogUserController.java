@@ -3,6 +3,7 @@ package com.qtatelier.OASystem.web;
 import com.alibaba.fastjson.JSONObject;
 import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
 import com.qtatelier.OASystem.response.ResBlogUser;
+import com.qtatelier.common.aop.SystemControllerLog;
 import com.qtatelier.config.CodeBusiness;
 import com.qtatelier.config.CodeEnum;
 import com.qtatelier.config.ResultView;
@@ -73,6 +74,7 @@ public class BlogUserController{
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @GetMapping("/info")
+    @SystemControllerLog(description = "登录并展示当前信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @UserLoginToken
     public ResultView getUserInfo(String userId,String token) {
         String logStr = "获取用户";
@@ -110,6 +112,7 @@ public class BlogUserController{
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
     @GetMapping("/list")
+    @SystemControllerLog(description = "获取所有用户信息",optType = CodeBusiness.OPT_TYPE.SEARCH_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @UserLoginToken
     public ResultView getUser(String token) {
         String logStr = "获取所有用户,token={}";
@@ -142,6 +145,7 @@ public class BlogUserController{
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "新增用户",optType = CodeBusiness.OPT_TYPE.ADD_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @PostMapping("/add")
     @UserLoginToken
     public ResultView insertUser(@RequestBody BlogUser blogUser, @ApiIgnore String token) {
@@ -178,6 +182,7 @@ public class BlogUserController{
             @ApiImplicitParam(name = "userName", value = "用户名", paramType = "query", dataType = "String"),
             @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataType = "String")
     })
+    @SystemControllerLog(description = "用户登录",optType = CodeBusiness.OPT_TYPE.LOGIN_CODE,moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
     @PostMapping("/login")
     public ResultView login(String userName, String password) {
         BlogUser blogUser = new BlogUser();
