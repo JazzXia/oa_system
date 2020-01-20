@@ -2,6 +2,8 @@ package com.qtatelier.OASystem.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
+import com.qtatelier.OASystem.request.UserEmp;
+import com.qtatelier.OASystem.request.UserReq;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.common.aop.SystemControllerLog;
 import com.qtatelier.config.CodeBusiness;
@@ -148,18 +150,31 @@ public class BlogUserController{
     @SystemControllerLog(description = "新增用户",optType = CodeBusiness.OPT_TYPE.ADD_CODE,moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @PostMapping("/add")
     @UserLoginToken
-    public ResultView insertUser(@RequestBody BlogUser blogUser, @ApiIgnore String token) {
+    public ResultView insertUser(@RequestBody UserReq userReq,String token) {
 
         String logStr = "新增用户,BlogUser={}";
         ResultView resultView = null;
         try {
-            logger.info(logStr + "开始",blogUser);
-            int count = blogUserService.insertUser(blogUser);
-            if(count != 1){
+            UserEmp userEmp = new UserEmp();
+            userEmp.setDeptId( userReq.getDeptId() );
+            userEmp.setDutyId( userReq.getDutyId() );
+            userEmp.setRoleId( userReq.getRoleId() );
+            //真实姓名
+            userEmp.setNickName( userReq.getNickName() );
+            //用户名
+            userEmp.setUsername( userReq.getUsername() );
+            userEmp.setImageName( userReq.getImageName() );
+            userEmp.setUserEmail( userReq.getUserEmail() );
+            userEmp.setRoleType( userReq.getRoleType() );
+            userEmp.setRoleTypeName( userReq.getRoleTypeName() );
+            logger.info(logStr + "开始",userEmp);
+            //int count = blogUserService.insertUser(blogUser);
+            //if(count != 1){
+            CodeEnum codeEnum = blogUserService.insertUser( userEmp );
                 logger.error(logStr+"新增用户不能为空");
                 resultView = new ResultView(CodeEnum.ERROR_404, "新增用户不能为空");
-            }
-            resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功",count);
+            //}
+            resultView =  new ResultView(CodeEnum.SUCCESS,"新增用户成功");
             return resultView;
         } catch (Exception e) {
             logger.error(logStr+"失败", e);
@@ -233,6 +248,7 @@ public class BlogUserController{
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
     })
+    @SystemControllerLog(description = "退出账号",optType = CodeBusiness.OPT_TYPE.LOGOUT_CODE,moduleName = CodeBusiness.MODULE_NAME.LOGIN_MODULE)
     @GetMapping("/logout")
     @UserLoginToken
     public ResultView logout(String token) {

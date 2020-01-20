@@ -2,6 +2,7 @@ package com.qtatelier.OASystem.basics.empinfo.mapper;
 
 
 import com.qtatelier.OASystem.basics.empinfo.model.EmpInfo;
+import com.qtatelier.OASystem.request.UserEmp;
 
 import java.util.List;
 
@@ -46,4 +47,11 @@ public interface EmpInfoMapper
      * @mbg.generated
      */
     int updateByPrimaryKey( EmpInfo record );
+
+    /**
+     *
+     * @param record
+     * @return
+     */
+    int insertInfo( UserEmp record );
 }

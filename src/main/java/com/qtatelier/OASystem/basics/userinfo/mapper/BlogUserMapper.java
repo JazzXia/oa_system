@@ -1,5 +1,6 @@
 package com.qtatelier.OASystem.basics.userinfo.mapper;
 
+import com.qtatelier.OASystem.request.UserEmp;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.dto.BlogUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -54,4 +55,8 @@ public interface BlogUserMapper {
      * @return
      */
     BlogUser selectByUserName(BlogUser blogUser);
+
+
+    int insertInfo( UserEmp record);
+
 }

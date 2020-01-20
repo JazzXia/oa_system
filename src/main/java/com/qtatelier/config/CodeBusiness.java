@@ -57,6 +57,20 @@ public class CodeBusiness {
         String SYSTEM_CODE = "6";
     }
 
+
+
+    /**
+     * 用户类型
+     */
+    public static interface ROLE_ID{
+        /** 超级管理员 */
+        String SM_CODE = "1";
+        /** 普通用户 */
+        String N_CODE = "2";
+
+    }
+
+
     /**
      * 单元名
      */

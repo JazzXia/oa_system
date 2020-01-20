@@ -11,6 +11,5 @@ import org.springframework.stereotype.Service;
  * @email xiaww@redoornetwork.com
  */
 @Service
-public class LinkDutyDeptService
-{
+public class LinkDutyDeptService {
 }
