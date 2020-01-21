@@ -52,9 +52,14 @@ public class BlogUserService {
     @Value( "${login.password}" )
     private String defaultPassword;
 
-    @Cacheable(value = "ROLE")
-    public List<BlogUser> findAll() {
-        return blogUserMapper.selectAll();
+    /**
+     * @description 模糊查询用户职位列表
+     * @param deptId
+     * @param nickName
+     * @return
+     */
+    public List<ResBlogUser> findAll(String deptId,String nickName) {
+        return blogUserMapper.empList(deptId,nickName);
     }
 
 
@@ -64,7 +69,12 @@ public class BlogUserService {
      * @return
      */
     public BlogUser findUserByname(BlogUser blogUser) {
-        return blogUserMapper.selectByUserName(blogUser);
+        if (blogUser != null){
+            return blogUserMapper.selectByUserName(blogUser);
+        }else {
+            throw new UserException("无当前用户");
+        }
+
     }
 
     /**
@@ -142,6 +152,7 @@ public class BlogUserService {
      * @param userId
      * @return
      */
+    @Cacheable(value = "ROLE")
     public ResBlogUser findUserInfo(String userId){
         if (StringUtils.isNotBlank( userId )){
             return blogUserMapper.selectByPrimaryKey(userId);

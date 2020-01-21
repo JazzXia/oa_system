@@ -8,7 +8,7 @@ a{text-decoration:none; outline:none;}
 li{ list-style-type:none;}
 
 body {
-    background: #ffffff;
+    background: #2E2D3C;
 	font-family:"SimSun",宋体,华文细黑,STHeiti,MingLiu;
 }
 body,html{width: 100%; height: 100%;overflow: hidden; position: relative;}

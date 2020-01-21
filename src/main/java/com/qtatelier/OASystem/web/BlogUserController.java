@@ -94,7 +94,7 @@ public class BlogUserController {
 
     /**
      * @return
-     * @description 获取用户列表
+     * @description 获取用户列表[可分页,可不分页]
      */
 
     @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
@@ -104,12 +104,12 @@ public class BlogUserController {
     @GetMapping("/list")
     @SystemControllerLog(description = "获取所有用户信息", optType = CodeBusiness.OPT_TYPE.SEARCH_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @UserLoginToken
-    public ResultView getUser(String token) {
+    public ResultView getUser(String deptId,String nickName, String token) {
         String logStr = "获取所有用户,token={}";
         ResultView resultView = null;
         try {
             logger.info(logStr + "开始", token);
-            List<BlogUser> list = blogUserService.findAll();
+            List<ResBlogUser> list = blogUserService.findAll(deptId,nickName);
             if (list.isEmpty()) {
                 logger.info(logStr + "失败", token);
                 return new ResultView(CodeEnum.ERROR_404, "暂无用户信息");

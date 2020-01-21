@@ -4,6 +4,7 @@ import com.qtatelier.OASystem.request.UserEmp;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.dto.BlogUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -59,4 +60,6 @@ public interface BlogUserMapper {
 
     int insertInfo( UserEmp record);
 
+
+    List<ResBlogUser> empList(@Param("deptId")String deptId,@Param("nickName")String nickName);
 }

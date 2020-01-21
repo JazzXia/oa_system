@@ -32,6 +32,7 @@ public class ResBlogUser {
     private String deptNo;
     private String deptName;
     private String empNo;
+    private String deptId;
     private String dutyName;
 
     @Override

@@ -61,27 +61,27 @@
                 <li>
                     <div class="left">邮箱：</div>
                     <div class="right">
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                        <input type="text" id="userEmail" name="title" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
                     <div class="left">个人网站：</div>
                     <div class="right">
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入个人网站" autocomplete="off" class="layui-input">
+                        <input type="text" id="webUrl" name="title" required lay-verify="required" placeholder="请输入个人网站" autocomplete="off" class="layui-input">
                     </div>
                 </li>
-                <li>
-                    <div class="left">姓名：</div>
-                    
-                    <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-                    </div>
-                </li>
+                <!--<li>-->
+                    <!--<div class="left">姓名：</div>-->
+                    <!---->
+                    <!--<div class="right"> -->
+                        <!--<input type="text" name="title" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</li>-->
                 <li>
                     <div class="left">性别：</div>
                     <div class="right">
-                            <input type="radio" name="sex" value="nan" title="男" checked>
-                            <input type="radio" name="sex" value="nv" title="女" >
+                            <input type="radio" name="sex" value="M" title="男" checked>
+                            <input type="radio" name="sex" value="W" title="女" >
                     </div>
                 </li>
                 <!--工号是自动生成的-->
@@ -94,7 +94,7 @@
                 <li style="height: 38px; overflow:initial;">
                     <div class="left">部门：</div>
                     <div class="right" id="deptinfo">
-                        <select name="dept" lay-verify="" lay-filter="">
+                        <select name="dept" lay-verify="" lay-filter="deptIdInfo" id="deptId">
                         </select> 
                     </div>
                 </li>
@@ -113,7 +113,7 @@
                     <!--</div>-->
                 <!--</li>-->
                 <li>
-                    <div class="left">排序：</div>
+                    <div class="left">头像：</div>
                     <div class="right">
                             <input style="margin-top: 8px;" type="file">
                     </div>
