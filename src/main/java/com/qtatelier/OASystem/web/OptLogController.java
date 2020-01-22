@@ -54,7 +54,7 @@ public class OptLogController {
             List<OptLog> list = optLogService.selectByAccoutId(optLog);
             if (list.isEmpty()) {
                 logger.info(logStr + "失败");
-                return new ResultView(CodeEnum.ERROR_404, "距离上次操作超过24小时无数据!!");
+                return new ResultView(CodeEnum.ERROR_404, "距离上次操作可能超过24小时,因此无数据!!");
             }
             return new ResultView(CodeEnum.SUCCESS, "获取日志成功", list);
         } catch (Exception e) {

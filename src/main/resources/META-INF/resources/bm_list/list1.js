@@ -59,7 +59,7 @@ function showAllList(info,size,num,total) {
                     +"<td>"+info[i].deptName+"</td>"
                     +"<td>"+info[i].deptDesc+"</td>"
                     +"<td>"+info[i].deptOrder+"</td>"
-                    +"<td></td>"
+                    +"<td></td></tr>"
         );
     }
     layui.use('table',function(){

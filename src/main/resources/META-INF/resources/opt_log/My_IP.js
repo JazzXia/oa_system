@@ -25,7 +25,7 @@ function listOptLogInfo() {
                 showAllList(info);
 
             } else {
-                layer.msg(result.msg)
+                layer.msg(result.msg,{icon:3})
             }
         },
         error : function(e) {
@@ -36,6 +36,7 @@ function listOptLogInfo() {
 }
 
 function showAllList(info) {
+    $(".wangid_conbox  table tr:not(:first)").empty("");
     for (var i = 0; i<info.length;i++){
         $(".wangid_conbox  table tbody").prepend(
             "<tr><td>"+(info.length-i)+"</td>"

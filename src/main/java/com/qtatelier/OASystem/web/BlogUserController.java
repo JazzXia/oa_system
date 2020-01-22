@@ -109,6 +109,12 @@ public class BlogUserController {
         ResultView resultView = null;
         try {
             logger.info(logStr + "开始", token);
+            if (deptId == ""){
+                deptId = null;
+            }
+            if (nickName == ""){
+                nickName = null;
+            }
             List<ResBlogUser> list = blogUserService.findAll(deptId,nickName);
             if (list.isEmpty()) {
                 logger.info(logStr + "失败", token);
