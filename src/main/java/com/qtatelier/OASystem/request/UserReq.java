@@ -14,7 +14,6 @@ import lombok.Data;
 public class UserReq {
 	private String username;
 	private String nickName;
-	private String imageName;
 	private String userEmail;
 	private String roleType;
 	private String roleTypeName;

@@ -62,4 +62,6 @@ public interface BlogUserMapper {
 
 
     List<ResBlogUser> empList(@Param("deptId")String deptId,@Param("nickName")String nickName);
+
+    ResBlogUser empInfoDetail(String empNo);
 }

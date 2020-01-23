@@ -58,6 +58,8 @@ function showUserInfo() {
                 $("#dept").html(info.deptName);
                 $("#level").html(info.dutyName);
                 $("#emp_no").html(info.empNo);
+                $("#image").attr("src", "head_image/" + info.imageName);
+               // console.log(info.imageName)
             } else {
                 if (result.code == ERROR)
                 {

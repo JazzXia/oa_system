@@ -85,10 +85,11 @@ function showAllList(info) {
             +"<td>"+info[i].callself+"</td>"
             +"<td>"+info[i].roleTypeName+"</td>"
             +"<td>"+info[i].roleTypeName+"</td>"
-            +"<td>"+info[i].imageName+"</td>"
+            +"<td><a href='#' class='jianl_list_img' onclick='YuanG_IMG()'" +"<img src='head_image/"+info[i].imageName+"'>" +"</a></td>"
             +"<td></td></tr>"
         );
     }
+    //<a href="#" class="jianl_list_img" onclick=" YuanG_IMG()"><img src="images/jl.jpg"></a>
 
     //静态表格
     layui.use('table',function(){
@@ -110,14 +111,47 @@ function showAllList(info) {
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的删除行么', function(index){
+                    //var empNo = obj.data.company;
+                    //var data={empNo: empNo};
+                    $.ajax({
+                        url : "role/removeEmp"+obj.data.company,
+                        headers: {
+                            'token':cookie('token')
+                        },
+                        data : data,
+                        type : "put",
+                        async: true,
+                        dataType : "json",
+                        success : function(result) {
+                            if (result.code == SUCCESS) {
+                                layer.msg(result.msg,{icon:1});
+                                setInterval(function(){
+                                    location.href = "YuanGonglist.html";
+                                },1000);
 
-                    
+                            } else {
+                                layer.msg(result.msg,{icon:2})
+                            }
+                        },
+                        error : function(e) {
+                            layer.msg("权限不足,未登录");
+                            //location.href = "login.html";
+                        }
+                    });
+
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     //向服务端发送删除指令
                 });
             } else if(layEvent === 'edit'){
-                layer.msg('修改操作');
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-molv',
+                    title: '修改员工信息',
+                    content:['/YuanGong_xg.html'+'?empNo='+obj.data.company,'true'] ,//不允许出现滚动条
+                    area:['1000px', '600px']
+                });
+                //layer.msg('修改操作');
             }
         });
         //监听头工具栏事件
@@ -129,7 +163,36 @@ function showAllList(info) {
                     if(data.length === 0){
                         layer.msg('请选择一行');
                     } else {
-                        layer.msg('删除');
+                        for (var i = 0; i < data.length; i++) {
+                            $.ajax({
+                                url : "role/removeEmp/"+data[i].company,
+                                headers: {
+                                    'token':cookie('token')
+                                },
+                                data : data,
+                                type : "put",
+                                async: true,
+                                dataType : "json",
+                                success : function(result) {
+                                    if (result.code == SUCCESS) {
+                                        layer.msg(result.msg,{icon:1});
+                                        setInterval(function(){
+                                            location.href = "YuanGonglist.html";
+                                        },1000);
+
+                                    } else {
+                                        layer.msg(result.msg,{icon:2})
+                                    }
+                                },
+                                error : function(e) {
+                                    layer.msg("权限不足,未登录");
+                                    //location.href = "login.html";
+                                }
+                            });
+                        }
+                        setInterval(function(){
+                            location.href = "YuanGonglist.html";
+                        },1000);
                     }
                     break;
             };

@@ -54,4 +54,8 @@ public interface EmpInfoMapper {
      * @return
      */
     int insertInfo(UserEmp record);
+
+    int removeEmp(String empNo);
+
+    String selectIdByNo(String empNo);
 }

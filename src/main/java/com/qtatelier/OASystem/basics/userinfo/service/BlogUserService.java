@@ -29,7 +29,7 @@ import java.util.List;
  * @description: 用户
  */
 
-@CacheConfig(cacheNames = "ROLETYPE",cacheManager = "MycacheManager")
+@CacheConfig(cacheNames = "ROLETYPE", cacheManager = "MycacheManager")
 @Service
 public class BlogUserService {
 
@@ -49,86 +49,86 @@ public class BlogUserService {
     @Value("${login.salt}")
     private String salt;
 
-    @Value( "${login.password}" )
+    @Value("${login.password}")
     private String defaultPassword;
 
     /**
-     * @description 模糊查询用户职位列表
      * @param deptId
      * @param nickName
      * @return
+     * @description 模糊查询用户职位列表
      */
-    public List<ResBlogUser> findAll(String deptId,String nickName) {
-        return blogUserMapper.empList(deptId,nickName);
+    public List<ResBlogUser> findAll(String deptId, String nickName) {
+        return blogUserMapper.empList(deptId, nickName);
     }
 
 
     /**
      * 通过用户名查询
+     *
      * @param blogUser
      * @return
      */
     public BlogUser findUserByname(BlogUser blogUser) {
-        if (blogUser != null){
+        if (blogUser != null) {
             return blogUserMapper.selectByUserName(blogUser);
-        }else {
+        } else {
             throw new UserException("无当前用户");
         }
 
     }
 
     /**
-     *
-     * @description 添加用户
      * @param userEmp
      * @return
+     * @description 添加用户
      */
     @Transactional(rollbackFor = Exception.class)
-    public CodeEnum insertUser( UserEmp userEmp){
+    public CodeEnum insertUser(UserEmp userEmp) {
         CodeEnum codeEnum = CodeEnum.SUCCESS;
-        if (userEmp != null){
-        String userId = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
-        String linkIdRole = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
-        String empId = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
-        String empNo = OaDesc.EmpInfo.getDesc() + ToolTime.getNowStringByAllTime();
-        String linkIdDept = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
-        String linkIdUser = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
-        userEmp.setEmpId( empId );
-        userEmp.setEmpNo( empNo );
-        userEmp.setLinkIdDept( linkIdDept );
-        userEmp.setLinkIdUser( linkIdUser );
-        userEmp.setLinkIdRole( linkIdRole );
-        userEmp.setUserId(userId);
-        userEmp.setPassword(DigestUtils.md5Hex(salt + defaultPassword));
-        int isSuccess =  blogUserMapper.insertInfo(userEmp);
-        if(isSuccess < 1){
-            if (isSuccess < 0) {
+        if (userEmp != null) {
+            String userId = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
+            String linkIdRole = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
+            String empId = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
+            String empNo = OaDesc.EmpInfo.getDesc() + ToolTime.getNowStringByAllTime();
+            String linkIdDept = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
+            String linkIdUser = ToolTime.getNowStringByAllTime() + ToolRandom.getStringByLen(6).toUpperCase();
+            userEmp.setEmpId(empId);
+            userEmp.setEmpNo(empNo);
+            userEmp.setLinkIdDept(linkIdDept);
+            userEmp.setLinkIdUser(linkIdUser);
+            userEmp.setLinkIdRole(linkIdRole);
+            userEmp.setUserId(userId);
+            userEmp.setPassword(DigestUtils.md5Hex(salt + defaultPassword));
+            int isSuccess = blogUserMapper.insertInfo(userEmp);
+            if (isSuccess < 1) {
+                if (isSuccess < 0) {
+                    return CodeEnum.ERROR_500;
+                }
+            }
+            if (Judge(linkRoleUserMapper.insertInfo(userEmp))) {
                 return CodeEnum.ERROR_500;
             }
+            if (Judge(linkEmpUserMapper.insertInfo(userEmp))) {
+                return CodeEnum.ERROR_500;
+            }
+            if (Judge(empInfoMapper.insertInfo(userEmp))) {
+                return CodeEnum.ERROR_500;
+            }
+            if (Judge(linkEmpDeptMapper.insertInfo(userEmp))) {
+                return CodeEnum.ERROR_500;
+            }
+            if (Judge(linkDutyDeptMapper.updateInfo(userEmp))) {
+                return CodeEnum.ERROR_500;
+            }
+            return codeEnum;
         }
-        if (Judge( linkRoleUserMapper.insertInfo( userEmp ) )){
-            return CodeEnum.ERROR_500;
-        }
-        if (Judge( linkEmpUserMapper.insertInfo( userEmp ) )) {
-            return CodeEnum.ERROR_500;
-        }
-        if (Judge( empInfoMapper.insertInfo( userEmp ) )) {
-            return CodeEnum.ERROR_500;
-        }
-        if (Judge( linkEmpDeptMapper.insertInfo( userEmp ) )) {
-            return CodeEnum.ERROR_500;
-        }
-        if (Judge( linkDutyDeptMapper.updateInfo( userEmp ) )){
-            return CodeEnum.ERROR_500;
-        }
-        return codeEnum;
-        }
-        throw new UserException( "添加的用户不能为空" );
+        throw new UserException("添加的用户不能为空");
     }
 
-    private boolean Judge( int isSuccess ) {
+    private boolean Judge(int isSuccess) {
         if (isSuccess < 1) {
-                return true;
+            return true;
         }
         return false;
     }
@@ -148,16 +148,52 @@ public class BlogUserService {
 
 
     /**
-     * @description 简单查询用户具体信息
      * @param userId
      * @return
+     * @description 简单查询用户具体信息
      */
     @Cacheable(value = "ROLE")
-    public ResBlogUser findUserInfo(String userId){
-        if (StringUtils.isNotBlank( userId )){
+    public ResBlogUser findUserInfo(String userId) {
+        if (StringUtils.isNotBlank(userId)) {
             return blogUserMapper.selectByPrimaryKey(userId);
         }
         throw new UserException("用户未登录!");
+    }
+
+
+    /**
+     * @param empNo
+     * @return
+     * @description 用户办理离职手续【即删除用户】
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public CodeEnum removeEmp(String empNo) {
+        CodeEnum codeEnum = CodeEnum.SUCCESS;
+        if (StringUtils.isNotBlank(empNo)) {
+            int isSuccess = empInfoMapper.removeEmp(empNo);
+            if (isSuccess < 1) {
+                throw new UserException("修改离职状态失败!");
+            }
+            String empId = empInfoMapper.selectIdByNo(empNo);
+            String linkId = linkDutyDeptMapper.findIndByEmp(empId);
+            if (StringUtils.isNotBlank(linkId)) {
+                isSuccess = linkDutyDeptMapper.updateById(linkId);
+                if (isSuccess < 1) {
+                    throw new UserException("修改关联状态失败!");
+                }
+            }
+            return codeEnum;
+        }
+        throw new UserException("当前员工不存在!");
+    }
+
+
+    public ResBlogUser showEmpInfo(String empNo) {
+        if (StringUtils.isNotBlank(empNo)) {
+            ResBlogUser resBlogUser = blogUserMapper.empInfoDetail(empNo);
+            return resBlogUser;
+        }
+        throw new UserException("当前员工不存在");
     }
 
 }

@@ -18,16 +18,20 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -143,12 +147,16 @@ public class BlogUserController {
     @SystemControllerLog(description = "新增用户", optType = CodeBusiness.OPT_TYPE.ADD_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
     @PostMapping("/add")
     @UserLoginToken
-    public ResultView insertUser(@RequestBody UserReq userReq, String token) {
+    public ResultView insertUser(UserReq userReq, @Param("token") String token, MultipartFile imageUser) {
 
         String logStr = "新增用户,BlogUser={}";
         ResultView resultView = null;
         try {
+            //获得文件名
+            String file = imageUser.getOriginalFilename();
+            System.out.println("文件名:"+file);
             UserEmp userEmp = new UserEmp();
+            userEmp.setImageName(file);
             userEmp.setDeptId(userReq.getDeptId());
             userEmp.setDutyId(userReq.getDutyId());
             userEmp.setRoleId(userReq.getRoleId());
@@ -156,22 +164,27 @@ public class BlogUserController {
             userEmp.setNickName(userReq.getNickName());
             //用户名
             userEmp.setUsername(userReq.getUsername());
-            userEmp.setImageName(userReq.getImageName());
-            userEmp.setUserEmail(userReq.getUserEmail());
+                userEmp.setUserEmail(userReq.getUserEmail());
             userEmp.setRoleType(userReq.getRoleType());
             userEmp.setRoleTypeName(userReq.getRoleTypeName());
             //性别
             userEmp.setCallself(userReq.getCallself());
             //网站
             userEmp.setWebUrl(userReq.getWebUrl());
-            logger.info(logStr + "开始", userEmp);
+            //"E:"+File.separator+"idea_workspace"+File.separator+"oa_system"+File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"META-INF"+File.separator+"resources"+File.separator+"head_image"
+            File dir = new File("E:\\idea_workspace\\oa_system\\src\\main\\resources\\META-INF\\resources\\head_image");
+            dir.mkdir();
+            File f1 = new File(dir,file);
+            imageUser.transferTo(f1);
 
+            logger.info(logStr + "开始", userEmp.toString());
             CodeEnum codeEnum = blogUserService.insertUser(userEmp);
             if (codeEnum != CodeEnum.SUCCESS) {
                 logger.error(logStr + "新增用户不能为空");
                 resultView = new ResultView(CodeEnum.ERROR_404, "新增用户不能为空");
+            }else {
+                resultView = new ResultView(CodeEnum.SUCCESS, "新增用户成功");
             }
-            resultView = new ResultView(CodeEnum.SUCCESS, "新增用户成功");
             return resultView;
         } catch (Exception e) {
             logger.error(logStr + "失败", e);
@@ -265,6 +278,64 @@ public class BlogUserController {
             logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, "退出异常", e);
         } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+    @ApiOperation(value = "移除当前用户", notes = "移除当前用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @SystemControllerLog(description = "移除当前用户", optType = CodeBusiness.OPT_TYPE.UPDATE_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @PutMapping("/removeEmp/{empNo}")
+    @UserLoginToken
+    public ResultView removeEmp(@PathVariable("empNo") String empNo, String token) {
+        String logStr = "移除当前用户";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始", token, empNo);
+            CodeEnum codeEnum = blogUserService.removeEmp(empNo);
+            if (codeEnum != CodeEnum.SUCCESS) {
+                logger.error(logStr + "失败");
+                resultView = new ResultView(CodeEnum.ERROR_502, "移除当前用户失败!");
+            }
+            resultView = new ResultView(codeEnum,"该员工离职成功!");
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+    @ApiOperation(value = "用户列表的详情", notes = "用户列表的详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "empNo", value = "员工工号", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @GetMapping("/showEmpInfo")
+    @SystemControllerLog(description = "用户列表的详情", optType = CodeBusiness.OPT_TYPE.SEARCH_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @UserLoginToken
+    public ResultView showEmpInfo(String empNo, String token) {
+        String logStr = "用户列表的详情";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始={}", token, empNo);
+            ResBlogUser blogUser = blogUserService.showEmpInfo(empNo);
+            if (null == blogUser) {
+                logger.info(logStr + "失败");
+                return new ResultView(CodeEnum.ERROR_404, "暂无用户信息");
+            }
+            return new ResultView(CodeEnum.SUCCESS, "获取用户成功", blogUser);
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
+
             logger.info(logStr + "结束");
         }
         return resultView;

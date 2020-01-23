@@ -2,10 +2,15 @@ package com.qtatelier;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.servlet.MultipartConfigElement;
+import java.io.File;
 
 /**
  * @descrpition 启动类
@@ -25,5 +30,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class OaApplication {
     public static void main(String [] args) {
         SpringApplication.run(OaApplication.class,args);
+    }
+
+
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //System.getProperty("user.dir") +
+        String location =  "E:\\APP";
+        File tmpFile = new File(location);
+        if (!tmpFile.exists()) {
+            tmpFile.mkdirs();
+        }
+        factory.setLocation(location);
+        return factory.createMultipartConfig();
     }
 }

@@ -57,4 +57,7 @@ public interface LinkDutyDeptMapper {
 
     int updateInfo(UserEmp userEmp);
 
+    String findIndByEmp(String empId);
+
+    int updateById(String deptId);
 }
