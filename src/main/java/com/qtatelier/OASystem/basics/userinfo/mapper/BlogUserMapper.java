@@ -1,6 +1,7 @@
 package com.qtatelier.OASystem.basics.userinfo.mapper;
 
 import com.qtatelier.OASystem.request.UserEmp;
+import com.qtatelier.OASystem.request.UserPasswordReq;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.dto.BlogUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,4 +65,6 @@ public interface BlogUserMapper {
     List<ResBlogUser> empList(@Param("deptId")String deptId,@Param("nickName")String nickName);
 
     ResBlogUser empInfoDetail(String empNo);
+
+    int updatePassword(UserPasswordReq userPasswordReq);
 }

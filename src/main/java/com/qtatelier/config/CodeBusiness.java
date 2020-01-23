@@ -26,8 +26,8 @@ public class CodeBusiness {
     /** token前缀 */
     public static final String TOKEN_ACCESS_KEY = "access-token:";
 
-    /** 默认超时时间为30分钟 */
-    public static final Long SESSTION_TIME = 30 * 60L;
+    /** 默认超时时间为60分钟 */
+    public static final Long SESSTION_TIME = 60 * 60L;
 
     /** 登录时效为5分钟 */
     public static final Long PASSWORD_OUT_TIME = 5 * 60L;

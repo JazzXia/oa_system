@@ -216,5 +216,11 @@ WHERE
     AND ei.is_leave = '1'
     AND ei.emp_no = #{empNo}
   </select>
+  
+  <update id="updatePassword" parameterType="com.qtatelier.OASystem.request.UserPasswordReq">
+      UPDATE blog_user
+      SET `password` = #{newPassWord,jdbcType = VARCHAR}
+      WHERE userName = #{userName,jdbcType = VARCHAR}
+  </update>
 
 </mapper>

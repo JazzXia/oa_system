@@ -7,7 +7,6 @@ $(function () {
 
 function logout() {
     var data = {};
-
     $.ajax({
         url : "role/logout",
         headers: {
@@ -63,8 +62,7 @@ function showUserInfo() {
                 $("#image").attr("src", "head_image/" + info.imageName);
                // console.log(info.imageName)
             } else {
-                if (result.code == ERROR)
-                {
+                if (result.code == ERROR) {
                     layer.msg(result.msg)
                 }
             }

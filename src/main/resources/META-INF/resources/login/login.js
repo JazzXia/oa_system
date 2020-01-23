@@ -48,7 +48,7 @@ function login() {
         success : function(result) {
             if (result.code == SUCCESS) {
                 var user = result.data;
-                console.log(user.token)
+                //console.log(user.token)
                 addCookie("token", user.user.token);
                 addCookie("id",user.user.userId);
                 addCookie("roleType", user.user.roleType);

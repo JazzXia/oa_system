@@ -8,6 +8,7 @@ import com.qtatelier.OASystem.basics.linkroleuser.mapper.LinkRoleUserMapper;
 import com.qtatelier.OASystem.basics.linkroleuser.model.LinkRoleUser;
 import com.qtatelier.OASystem.basics.userinfo.mapper.BlogUserMapper;
 import com.qtatelier.OASystem.request.UserEmp;
+import com.qtatelier.OASystem.request.UserPasswordReq;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.OASystem.thread.UserException;
 import com.qtatelier.common.OaDesc;
@@ -20,7 +21,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -153,7 +153,7 @@ public class BlogUserService {
      * @return
      * @description 简单查询用户具体信息
      */
-    @Cacheable(value = "ROLE")
+//    @Cacheable(value = "ROLE")
     public ResBlogUser findUserInfo(String userId) {
         if (StringUtils.isNotBlank(userId)) {
             return blogUserMapper.selectByPrimaryKey(userId);
@@ -199,9 +199,9 @@ public class BlogUserService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public CodeEnum updateEmp(String empNo,String dutyId,String roleId){
+    public CodeEnum updateEmp(String empNo, String dutyId, String roleId) {
         CodeEnum codeEnum = CodeEnum.SUCCESS;
-        if (StringUtils.isNotBlank(empNo)){
+        if (StringUtils.isNotBlank(empNo)) {
             String empId = empInfoMapper.selectIdByNo(empNo);
             String linkId = linkDutyDeptMapper.findIndByEmp(empId);
             if (StringUtils.isNotBlank(linkId)) {
@@ -228,5 +228,31 @@ public class BlogUserService {
         }
         throw new UserException("当前员工不存在");
     }
+
+    /**
+     * @return
+     * @desciption:修改密码
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public CodeEnum updatePassWord(UserPasswordReq userPasswordReq) {
+        CodeEnum codeEnum = CodeEnum.SUCCESS;
+        if (StringUtils.isNotBlank(userPasswordReq.getUserName())) {
+            BlogUser blogUser = new BlogUser();
+            blogUser.setUsername(userPasswordReq.getUserName());
+            BlogUser user = blogUserMapper.selectByUserName(blogUser);
+            if (StringUtils.isNotBlank(userPasswordReq.getPrePassWord())) {
+                if (DigestUtils.md5Hex(salt + userPasswordReq.getPrePassWord()).equals(user.getPassword())) {
+                    userPasswordReq.setNewPassWord(DigestUtils.md5Hex(salt+userPasswordReq.getNewPassWord()));
+                    int isSuccess = blogUserMapper.updatePassword(userPasswordReq);
+                    if (isSuccess < 1) {
+                        throw new UserException("修改密码失败!");
+                    }
+                }
+            }
+            return codeEnum;
+        }
+        throw new UserException("未填写用户名");
+    }
+
 
 }

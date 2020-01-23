@@ -19,6 +19,9 @@
     <!-- layui css -->
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script type="text/javascript" src="mima/mima.js"></script>
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -42,32 +45,32 @@
                 <li>
                     <div class="left">用户名:</div>
                     <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="woshinibb" autocomplete="off" class="layui-input">
+                        <input type="text" id="userName" name="title" required lay-verify="required" placeholder="woshinibb" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
                     <div class="left">原密码：</div>
                     <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                        <input type="text" id="prePassWord" name="title" required lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
                     <div class="left">新密码：</div>
                     
                     <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                        <input type="text" id="newPassWord" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
                     </div>
                 </li>
-                <li>
-                    <div class="left">确认新密码：</div>
-                    <div class="right"> 
-                        <input type="text" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
-                    </div>
-                </li>
+                <!--<li>-->
+                    <!--<div class="left">确认新密码：</div>-->
+                    <!--<div class="right"> -->
+                        <!--<input type="text" name="title" required lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</li>-->
                 <li>
                     <div class="left"> &nbsp;</div>
                     <div class="right"> 
-                        <button class="button_qr">确定添加保护</button>
+                        <button class="button_qr" type="button" id="update">确定修改密码</button>
                     </div>
                 </li>
             </ul> 

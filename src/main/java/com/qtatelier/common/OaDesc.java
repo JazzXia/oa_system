@@ -16,7 +16,15 @@ public enum OaDesc {
     /**
      * 部门编号
      */
-    DeptInfo(2,"BM");
+    DeptInfo(2,"BM"),
+    /**
+     * 备案号
+     */
+    BackNo(3,"BA"),
+    /**
+     * 合同号
+     */
+    ContractNo(4,"CO");
 
     private String desc;
     private int code;

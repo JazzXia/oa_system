@@ -3,6 +3,7 @@ package com.qtatelier.OASystem.web;
 import com.alibaba.fastjson.JSONObject;
 import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
 import com.qtatelier.OASystem.request.UserEmp;
+import com.qtatelier.OASystem.request.UserPasswordReq;
 import com.qtatelier.OASystem.request.UserReq;
 import com.qtatelier.OASystem.request.UserUpdateReq;
 import com.qtatelier.OASystem.response.ResBlogUser;
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +60,9 @@ public class BlogUserController {
 
     @Autowired
     private ToolRedis redis;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Value("${login.salt}")
     private String salt;
@@ -274,7 +279,7 @@ public class BlogUserController {
             } else {
                 resultView = new ResultView(CodeEnum.ERROR_500, "退出失败");
             }
-
+            redisTemplate.delete(CodeBusiness.TOKEN_ACCESS_KEY);
             return resultView;
         } catch (Exception e) {
             logger.error(logStr + "失败", e);
@@ -302,8 +307,9 @@ public class BlogUserController {
             if (codeEnum != CodeEnum.SUCCESS) {
                 logger.error(logStr + "失败");
                 resultView = new ResultView(CodeEnum.ERROR_502, "移除当前用户失败!");
+            }else {
+                resultView = new ResultView(codeEnum,"该员工离职成功!");
             }
-            resultView = new ResultView(codeEnum,"该员工离职成功!");
         } catch (Exception e) {
             logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
@@ -360,9 +366,37 @@ public class BlogUserController {
             CodeEnum codeEnum = blogUserService.updateEmp(userUpdateReq.getEmpNo(),userUpdateReq.getDutyId(),userUpdateReq.getRoleId());
             if (codeEnum != CodeEnum.SUCCESS) {
                 logger.error(logStr + "失败");
-                resultView = new ResultView(CodeEnum.ERROR_502, "编辑当前用户!");
+                resultView = new ResultView(CodeEnum.ERROR_502, "编辑当前用户失败!");
             }
             resultView = new ResultView(codeEnum,"编辑当前用户成功!");
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+    @ApiOperation(value = "修改密码", notes = "修改密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @SystemControllerLog(description = "修改密码", optType = CodeBusiness.OPT_TYPE.UPDATE_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @PutMapping("/updatePassword")
+    @UserLoginToken
+    public ResultView updatePassword(@RequestBody UserPasswordReq userPasswordReq,String token){
+        String logStr = "修改密码";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始", token, userPasswordReq.toString());
+            CodeEnum codeEnum = blogUserService.updatePassWord(userPasswordReq);
+            if (codeEnum != CodeEnum.SUCCESS) {
+                logger.error(logStr + "失败");
+                resultView = new ResultView(CodeEnum.ERROR_502, "修改密码失败!");
+            }else {
+                resultView = new ResultView(codeEnum,"修改密码成功!");
+            }
         } catch (Exception e) {
             logger.error(logStr + "失败", e);
             resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
