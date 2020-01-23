@@ -121,4 +121,10 @@
     values (#{linkIdUser,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
     )
   </insert>
+  
+  <select id="findInfoById" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT user_id AS userId
+    FROM link_emp_user
+    WHERE emp_id = #{empId,jdbcType=VARCHAR}
+  </select>
 </mapper>

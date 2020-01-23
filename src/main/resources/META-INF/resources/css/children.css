@@ -1,6 +1,6 @@
 
 html,body{ overflow: auto; }
-body{ font-family:"SimSun",宋体,华文细黑,STHeiti,MingLiu !important; font-size: 14px; background-color: #eee;}
+body{ font-family:"SimSun",宋体,华文细黑,STHeiti,MingLiu !important; font-size: 14px; background-color: #2E2D3C;}
 
 /*top*/
 .control_box .layui-layout-admin .layui-header{overflow: hidden; height: 90px;
@@ -10,7 +10,7 @@ body{ font-family:"SimSun",宋体,华文细黑,STHeiti,MingLiu !important; font-
 .top_box .logo{
     padding-left: 4px;
     height: 64px;
-    background: url(../images/logo01.png) no-repeat;
+    /*background: url(../images/logo01.png) no-repeat;*/
     background-size: 174px;
     float: left;
 }

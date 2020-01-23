@@ -55,7 +55,7 @@ function login() {
 
                 layer.msg("登录成功",{icon:1});
                 setInterval(function(){
-                    location.href = "/index.html";
+                    location.href = "/child.html";
                 },1000);
 
             } else {

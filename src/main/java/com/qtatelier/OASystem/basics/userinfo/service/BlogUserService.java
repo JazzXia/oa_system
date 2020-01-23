@@ -5,6 +5,7 @@ import com.qtatelier.OASystem.basics.linkdutydept.mapper.LinkDutyDeptMapper;
 import com.qtatelier.OASystem.basics.linkempdept.mapper.LinkEmpDeptMapper;
 import com.qtatelier.OASystem.basics.linkempuser.mapper.LinkEmpUserMapper;
 import com.qtatelier.OASystem.basics.linkroleuser.mapper.LinkRoleUserMapper;
+import com.qtatelier.OASystem.basics.linkroleuser.model.LinkRoleUser;
 import com.qtatelier.OASystem.basics.userinfo.mapper.BlogUserMapper;
 import com.qtatelier.OASystem.request.UserEmp;
 import com.qtatelier.OASystem.response.ResBlogUser;
@@ -192,6 +193,38 @@ public class BlogUserService {
         if (StringUtils.isNotBlank(empNo)) {
             ResBlogUser resBlogUser = blogUserMapper.empInfoDetail(empNo);
             return resBlogUser;
+        }
+        throw new UserException("当前员工不存在");
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public CodeEnum updateEmp(String empNo,String dutyId,String roleId){
+        CodeEnum codeEnum = CodeEnum.SUCCESS;
+        if (StringUtils.isNotBlank(empNo)){
+            String empId = empInfoMapper.selectIdByNo(empNo);
+            String linkId = linkDutyDeptMapper.findIndByEmp(empId);
+            if (StringUtils.isNotBlank(linkId)) {
+                int isSuccess = linkDutyDeptMapper.updateById(linkId);
+                if (isSuccess < 1) {
+                    throw new UserException("修改关联状态失败!");
+                }
+                UserEmp userEmp = new UserEmp();
+                userEmp.setDutyId(dutyId);
+                userEmp.setEmpId(empId);
+                if (Judge(linkDutyDeptMapper.updateInfo(userEmp))) {
+                    return CodeEnum.ERROR_500;
+                }
+                String userId = linkEmpUserMapper.findInfoById(empId);
+                LinkRoleUser linkRoleUser = new LinkRoleUser();
+                linkRoleUser.setRoleId(roleId);
+                linkRoleUser.setUserId(userId);
+                isSuccess = linkRoleUserMapper.updateRoleId(linkRoleUser);
+                if (isSuccess < 1) {
+                    throw new UserException("修改权限失败!");
+                }
+            }
+            return codeEnum;
         }
         throw new UserException("当前员工不存在");
     }

@@ -47,27 +47,27 @@
             <form class="layui-form layui-form-pane" action="">
             <ul> 
                 <li>
-                    <div class="left">用户名：</div>
+                    <div class="left">登录[只读]：</div>
                     <div class="right"> 
-                        <input type="text" id="userName" name="title" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        <input disabled="disabled" type="text" id="userName" name="title" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
-                    <div class="left">真实姓名：</div>
+                    <div class="left">姓名[只读]：</div>
                     <div class="right">
-                        <input type="text" id="nickName" name="title" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
+                        <input disabled="disabled" type="text" id="nickName" name="title" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
-                    <div class="left">邮箱：</div>
+                    <div class="left">邮箱[只读]：</div>
                     <div class="right">
-                        <input type="text" id="userEmail" name="title" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                        <input disabled="disabled" type="text" id="userEmail" name="title" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <li>
-                    <div class="left">个人网站：</div>
+                    <div class="left">网站[只读]：</div>
                     <div class="right">
-                        <input type="text" id="webUrl" name="title" required lay-verify="required" placeholder="请输入个人网站" autocomplete="off" class="layui-input">
+                        <input disabled="disabled" type="text" id="webUrl" name="title" required lay-verify="required" placeholder="请输入个人网站" autocomplete="off" class="layui-input">
                     </div>
                 </li>
                 <!--<li>-->
@@ -78,10 +78,10 @@
                     <!--</div>-->
                 <!--</li>-->
                 <li>
-                    <div class="left">性别：</div>
+                    <div class="left">性别[只读]：</div>
                     <div class="right">
-                            <input type="radio" name="sex" value="M" title="男" >
-                            <input type="radio" name="sex" value="W" title="女" >
+                            <input type="radio" name="sex" value="M" title="男" disabled="disabled">
+                            <input type="radio" name="sex" value="W" title="女" disabled="disabled">
                     </div>
                 </li>
                 <!--工号是自动生成的-->
@@ -113,9 +113,9 @@
                     <!--</div>-->
                 <!--</li>-->
                 <li>
-                    <div class="left">头像：</div>
+                    <div class="left">头像[只读]：</div>
                     <div class="right">
-                            <input style="margin-top: 8px;" type="file">
+                            <input style="margin-top: 8px;" type="file" disabled="disabled">
                     </div>
                 </li>
                 <li>
@@ -128,7 +128,7 @@
                 <li>
                     <div class="left"> &nbsp;</div>
                     <div class="right"> 
-                        <button class="button_qr" type="button" id="addEmp">确定添加</button>
+                        <button class="button_qr" type="button" id="updateEmp">确定修改</button>
                     </div>
                 </li>
             </ul> 

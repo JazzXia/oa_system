@@ -56,4 +56,6 @@ public interface LinkRoleUserMapper {
     int updateByPrimaryKey(LinkRoleUser record);
 
     int insertInfo(UserEmp record);
+
+    int updateRoleId(LinkRoleUser linkRoleUser);
 }

@@ -27,29 +27,29 @@
 
 <body class="layui-layout-body control_box">
 	<!-- 背景 -->
-	<div class="bg_box" style="background: url(images/20190415.jpg) no-repeat center center; background-size: cover;"></div>
+	<!--<div class="bg_box" style="background: url(images/20190415.jpg) no-repeat center center; background-size: cover;"></div>-->
 	<!-- content box-->
 	<div class="layui-layout layui-layout-admin">
 		<!-- top -->
 		<div class="layui-header">
 			<div class="top_box">
 		        <div class="logo">
-		        	<img src="images/logo_touming.gif">
+					<img src="images/logo_touming.png">
 		        	<span></span>
-		        	<b><img src="images/word.png" /></b>
+		        	<!--<b><img src="images/word.png" /></b>-->
 		        </div>
 
-				<div class="top_user">
-					<span><img src="images/head.jpg" /></span>
+				<div class="top_user" id="userInfo">
+					<span><img src="" id="image"/></span>
 					<dl>
-						<dt>关晓彤（营销总监）</dt>
-						<dd>级别：普通账户 上次登录时间：2019-05-27 15:30:57</dd>
+						<dt id="emp"></dt>
+						<dd id="roleName"></dd>
+						<!--<dd>上次登录时间：2019-05-27 15:30:57</dd>-->
 					</dl>
 				</div>
 
 		        <div class="top_icon">
 		        	<a href="index.html" title="首页"><img src="images/top_home.png"></a>
-		        	<a href="#" title="个人设置"><img src="images/top_person.png"></a>
 		        	<a id="exit" href="#" title="退出"><img src="images/top_exit.png"></a>
 		        </div>
 		    </div>
@@ -59,13 +59,6 @@
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree"  lay-filter="test">
-					<li class="layui-nav-item layui-nav-itemed">
-						<a class="" href="javascript:;"><i class="fa fa-clipboard fa-fw"></i>日用资料</a>
-						<dl class="layui-nav-child">
-							<dd><a href="daily_mykh.html" target="main_self_frame">我的意向客户管理</a></dd>
-							<dd><a href="daily_list.html" target="main_self_frame">意向客户信息列表</a></dd>
-						</dl>
-					</li>
 					<li class="layui-nav-item">
 						<a href="javascript:;"><i class="fa fa-address-book fa-fw"></i>VIP客户信息管理</a>
 						<dl class="layui-nav-child">
@@ -73,21 +66,6 @@
 							<dd><a href="vip_list.html" target="main_self_frame">VIP客户信息列表</a></dd>
 						</dl>
 					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;"><i class="fa fa-shield fa-fw"></i>客户保护</a>
-						<dl class="layui-nav-child">
-							<dd><a href="KeHuBH_tj.html"  target="main_self_frame">添加保护系统</a></dd>
-							<dd><a href="KeHuBH_list.html"  target="main_self_frame">我的保护系统列表</a></dd>
-							<dd><a href="KeHuBH_list1.html"  target="main_self_frame">员工保护系统列表</a></dd>
-						</dl>
-					</li> 
-					<li class="layui-nav-item">
-						<a href="javascript:;"><i class="fa fa-address-card fa-fw"></i>回访记录</a>
-						<dl class="layui-nav-child">
-							<dd><a href="HuiFangJL_tj.html" target="main_self_frame">添加回访记录</a></dd>
-							<dd><a href="HuiFangJL_my.html" target="main_self_frame">我的回访记录</a></dd>
-						</dl>
-					</li> 
 					<li class="layui-nav-item">
 						<a href="javascript:;"><i class="fa fa-file-text fa-fw"></i>回访列表</a>
 						<dl class="layui-nav-child">
@@ -111,12 +89,6 @@
 						</dl>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;"><i class="fa fa-user-plus fa-fw"></i>合作客户</a>
-						<dl class="layui-nav-child">
-							<dd><a href="javascript:;">公司客户</a></dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
 						<a href="javascript:;"><i class="fa fa-hourglass-half fa-fw"></i>工单进程</a>
 						<dl class="layui-nav-child">
 							<dd><a href="GongDJC.html" target="main_self_frame">工单列表</a></dd>
@@ -124,24 +96,10 @@
 						</dl>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;"><i class="fa fa-area-chart fa-fw"></i>关键词统计</a>
-						<dl class="layui-nav-child">
-							<dd><a href="javascript:;">关键词统计</a></dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;"><i class="fa fa-legal fa-fw"></i>二次开发评估</a>
-						<dl class="layui-nav-child">
-							<dd><a href="javascript:;">二次开发评估</a></dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item">
 						<a href="javascript:;"><i class="fa fa-user fa-fw"></i>个人设置</a>
 						<dl class="layui-nav-child">
 							<dd><a href="My_IP.html" target="main_self_frame">操作记录</a></dd>
-							<!--<dd><a href="javascript:;">登录记录</a></dd>-->
 							<dd><a href="My_mim.html" target="main_self_frame">修改密码</a></a></dd>
-							<dd><a href="My_BJ.html" target="main_self_frame">背景设置</a></dd>
 						</dl>
 					</li>
 				</ul>
@@ -169,7 +127,7 @@
 				})
 			</script>
 			<!-- iframe -->
-			<iframe src="daily_mykh.html" name="main_self_frame" frameborder="0" class="layadmin-iframe" scrolling="yes"></iframe>
+			<iframe src="vip_list.html" name="main_self_frame" frameborder="0" class="layadmin-iframe" scrolling="yes"></iframe>
 		</div>
 	  
 	</div>

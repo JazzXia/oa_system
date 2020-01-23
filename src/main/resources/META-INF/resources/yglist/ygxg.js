@@ -1,6 +1,7 @@
 var SUCCESS = 200;
 var ERROR = 404;
 $(function () {
+    $("#updateEmp").click(updateEmpInfo);
     showEmpDetail();
     listDeptInfo();
     layui.use('form', function() {
@@ -10,6 +11,67 @@ $(function () {
         });
     });
 });
+
+function updateEmpInfo() {
+    var a = GetRequest();
+    var empNo = a["empNo"];
+    var dutyId = $("#dutyinfo select").val();
+    var roleId = null;
+    var roleType = null;
+    var roleTypeName = null;
+    var flag=false;
+    $("input[name='test']").each(function(){
+        if($(this).is(':checked')){
+            flag=true;
+        }
+    });
+
+    if(flag){
+        roleId = "1";
+        roleType = "SM";
+        roleTypeName = "超级管理员";
+    }else{
+        roleId = "2";
+        roleType = "N";
+        roleTypeName = "普通用户";
+    }
+    var data ={empNo:empNo,dutyId:dutyId,roleId:roleId};
+    var url = "role/updateEmp";
+
+    $.ajax({
+        url : url,
+        data : JSON.stringify(data),
+        type : "put",
+        headers: {
+            'token':cookie('token')
+        },
+        async:false,
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        success : function(result) {
+            if (result.code == SUCCESS) {
+
+                layer.msg(result.msg,{icon:1});
+
+                setInterval(function(){
+                    location.href = "YuanGong_xg.html?empNo="+empNo;
+                },1000);
+
+            } else {
+                var msg = result.msg;
+                if (result.code == ERROR) {
+                    layer.msg(msg,{icon:2});
+                } else {
+                    layer.msg(msg,{icon:2})
+                }
+            }
+        },
+        error : function(e) {
+            alert("网络连接异常")
+        }
+    })
+}
+
 
 function showEmpDetail() {
     var a = GetRequest();

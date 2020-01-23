@@ -54,6 +54,8 @@ function showUserInfo() {
         success : function(result) {
             if (result.code == SUCCESS) {
                 var info = result.data;
+                $("#roleName").html("级别:"+info.roleTypeName);
+                $("#emp").html("员工:"+info.nickName);
                 $("#name").html(info.nickName);
                 $("#dept").html(info.deptName);
                 $("#level").html(info.dutyName);

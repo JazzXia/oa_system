@@ -57,4 +57,6 @@ public interface LinkEmpUserMapper {
 
 
     int insertInfo(UserEmp record);
+
+    String findInfoById(String empId);
 }

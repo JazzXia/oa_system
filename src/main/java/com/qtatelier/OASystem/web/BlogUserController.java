@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qtatelier.OASystem.basics.userinfo.service.BlogUserService;
 import com.qtatelier.OASystem.request.UserEmp;
 import com.qtatelier.OASystem.request.UserReq;
+import com.qtatelier.OASystem.request.UserUpdateReq;
 import com.qtatelier.OASystem.response.ResBlogUser;
 import com.qtatelier.common.aop.SystemControllerLog;
 import com.qtatelier.config.CodeBusiness;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -336,6 +338,35 @@ public class BlogUserController {
             resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
         } finally {
 
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
+
+
+
+    @ApiOperation(value = "编辑当前用户", notes = "编辑当前用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @SystemControllerLog(description = "编辑当前用户", optType = CodeBusiness.OPT_TYPE.UPDATE_CODE, moduleName = CodeBusiness.MODULE_NAME.USER_MODULE)
+    @PutMapping("/updateEmp")
+    @UserLoginToken
+    public ResultView updateEmp(@RequestBody UserUpdateReq userUpdateReq, String token) {
+        String logStr = "编辑当前用户";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始", token, userUpdateReq.toString());
+            CodeEnum codeEnum = blogUserService.updateEmp(userUpdateReq.getEmpNo(),userUpdateReq.getDutyId(),userUpdateReq.getRoleId());
+            if (codeEnum != CodeEnum.SUCCESS) {
+                logger.error(logStr + "失败");
+                resultView = new ResultView(CodeEnum.ERROR_502, "编辑当前用户!");
+            }
+            resultView = new ResultView(codeEnum,"编辑当前用户成功!");
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
             logger.info(logStr + "结束");
         }
         return resultView;
