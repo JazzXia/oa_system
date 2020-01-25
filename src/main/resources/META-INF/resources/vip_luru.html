@@ -16,9 +16,12 @@
     <!-- 在线图标库 地址：http://fontawesome.dashgame.com/-->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- layui css -->
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<!-- layui css -->
+	<link rel="stylesheet" href="layui/css/layui.css">
+	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+	<script type="text/javascript" src="vip/vip_luru.js"></script>
+	<script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -36,38 +39,38 @@
 			<table class="if_tianjiatext layui-table"   lay-size="lg"> 
 				<tbody>
 					<tr>
-						<td class="td_1">公司名称</td> 
-						<td><input type="text" placeholder="驰通科技集团股份有限公司"></td>
+						<td class="td_1">公司名称</td>
+						<td><input type="text" id="companyName" placeholder="驰通科技集团股份有限公司"></td>
 						<td class="td_1 td_border">地址</td>
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="address" placeholder=""></td>
 						<td class="td_1 td_border">合同金额</td>
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="payFree" placeholder=""></td>
 					</tr> 
 
 					<tr>
 						<td class="td_1 td_border">联系人</td> 
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="contact" placeholder=""></td>
 						<td class="td_1 td_border">电话</td> 
-						<td><input type="text" placeholder=""></td>
-						<td class="td_1 td_border">地址</td>
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="phone" placeholder=""></td>
+						<td class="td_1 td_border">域名</td>
+						<td><input type="text" id="ftp" placeholder=""></td>
 					</tr> 
 
 					<tr>
-						<td class="td_1 td_border">签署日期</td> 
+						<td class="td_1 td_border">签署日期</td>
 						<td> 
-							<input type="text" class="layui-input"  id="test1" placeholder="yyyy-MM-dd">
+							<input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
 						</td>
 						<td class="td_1 td_border">制作人员</td>
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="author" placeholder=""></td>
 						<td class="td_1 td_border">特殊说明</td>
-						<td><input type="text" placeholder=""></td>
+						<td><input type="text" id="remark" placeholder=""></td>
 					</tr> 
 
 					<tr class="tianjie_button">
 						<td colspan="6" style="border-right:1px solid #e6e6e6;">
-							<button>保存信息</button>
-							<button>取消</button>
+							<button type="button" id="saveInfo">保存信息</button>
+							<button type="button" id="cancle">取消</button>
 						</td>  
 					</tr>
 				</tbody>

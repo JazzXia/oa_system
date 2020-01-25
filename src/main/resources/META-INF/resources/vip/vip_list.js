@@ -19,10 +19,9 @@ function listVipInfo() {
         var endTime = $("#endTime").val();
         var customerName = $("#name").val();
         var userId = null;
-        if (cookie("roleType") == "SM"){
+        if (cookie("roleType") == "N"){
             userId = cookie("id");
         }
-        //console.log(userId);
         var data = {customerName:customerName,endTime:endTime,startTime:startTime,userId:userId};
         $.ajax({
             url : "/customer/allInfo",
@@ -72,9 +71,10 @@ function listVipInfo() {
 function showAllList(info) {
     $(".wangid_conbox  table tr:not(:first)").empty("");
     for (var i = 0; i < info.length ; i++){
+
         $(".wangid_conbox table tbody").prepend(
             "<tr><td></td> "
-            +"<td><a  href='javascript:;' style='color:#9e3b3e;' onclick='Vip_hf()'>回访</a>丨<a href='javascript:;' style='color:#205b9e;' onclick='Vip_xq()'>详情</a> </td>"
+            +"<td><a  href='javascript:;' style='color:#9e3b3e;' onclick='Vip_hf()'>回访</a>丨<a href='javascript:;' style='color:#205b9e;' onclick='Vip_xq("+JSON.stringify(info[i].customerId)+");'>详情</a> </td>"
             +"<td>"+info[i].contract+"</td>>"
             +"<td>"+info[i].author+"</td>>"
             +"<td>"+info[i].customerName+"</td>"
@@ -134,7 +134,7 @@ function showAllList(info) {
 
 
 //  iframe层  详情信息
-function Vip_xq(){
+function Vip_xq(id){
     //iframe层
     layer.open({
         type: 2,//层类型
@@ -147,7 +147,7 @@ function Vip_xq(){
         // offset: 'rb', //右下角弹出
         // time: 2000, //2秒后自动关闭
         anim: 5,//动画
-        content: ['vip_list_xq.html', 'no'], //iframe的url，no代表不显示滚动条
+        content: ['vip_list_xq.html?customerId='+id, 'no'] //iframe的url，no代表不显示滚动条
     });
 
 }

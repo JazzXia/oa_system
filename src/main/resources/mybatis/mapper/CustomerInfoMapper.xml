@@ -99,7 +99,7 @@
       This element was generated on Fri Jan 24 10:27:51 CST 2020.
     -->
     customer_id, customer_name, customer_contact, customer_address, sign_date, pay_free, 
-    back_no, customer_phone, contract, remark, ftp, load, author, suggestion_one, suggestion_two, 
+    back_no, customer_phone, contract, remark, ftp, `load`, author, suggestion_one, suggestion_two,
     suggestion_three
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qtatelier.OASystem.basics.customerinfo.model.CustomerInfoExample" >
@@ -214,7 +214,7 @@
         ftp,
       </if>
       <if test="load != null" >
-        load,
+        `load`,
       </if>
       <if test="author != null" >
         author,
@@ -491,7 +491,7 @@
     LEFT JOIN emp_info ei ON ei.emp_id = leu.emp_id
     where
     ei.is_leave = '1'
-    <if test="customerName != null" >
+    <if test="customerName != null and customerName != ''" >
      AND ci.customer_name like '%${customerName}%'
     </if>
     <if test="startTime != null">
@@ -500,7 +500,7 @@
     <if test="endTime != null">
       AND ci.sign_date like  '%${endTime}%'
     </if>
-    <if test="userId != null">
+    <if test="userId != null and userId != ''">
       AND luc.user_id = #{userId,jdbcType=VARCHAR}
     </if>
   </select>
