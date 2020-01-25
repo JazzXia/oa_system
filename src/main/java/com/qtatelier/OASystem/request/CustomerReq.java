@@ -15,4 +15,5 @@ public class CustomerReq {
     private String endTime;
     private String customerName;
     private String userId;
+    private String load;
 }

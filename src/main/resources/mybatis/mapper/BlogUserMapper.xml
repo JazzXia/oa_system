@@ -103,8 +103,8 @@
   </select>
 
   <select id="selectByUserName" resultMap="BaseResultMap" parameterType="com.qtatelier.dto.BlogUser">
-    SELECT bu.user_id,br.role_type as roleType,br.role_type_name as roleTypeName,bu.userName as username,bu.`password` as password,bu.sign as sign,bu.`location` as location,
-	bu.web_url as webUrl,bu.callself as callself,bu.nick_name as nickName,bu.image_name as imageName,bu.user_email as userEmail,bu.token as token
+    SELECT bu.user_id,br.role_type,br.role_type_name ,bu.userName,bu.`password` ,bu.sign ,bu.`location` ,
+	bu.web_url ,bu.callself ,bu.nick_name ,bu.image_name ,bu.user_email,bu.token
     FROM blog_user bu
 LEFT JOIN
 	link_role_user lru

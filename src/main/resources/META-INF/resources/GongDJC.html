@@ -19,6 +19,9 @@
     <!-- layui css -->
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script type="text/javascript" src="GongDJC/GongDJ.js"></script>
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -37,69 +40,37 @@
         <!-- 筛选 --> 
         <div class="shuaix">
             <ul class="gongdan_list_top">
-                <li><a href="#" class="color1">所有</a></li>
-                <li><a href="#" class="color2">待制作</a></li>
-                <li><a href="#" class="color3">制作中</a></li>
-                <li><a href="#" class="color5">修改中</a></li>
-                <li><a href="#" class="color6">已完成</a></li> 
+                <li><a href="#" class="color1" id="all">所有</a></li>
+                <li><a href="#" class="color2" id="load1">待制作</a></li>
+                <li><a href="#" class="color3" id="load2">制作中</a></li>
+                <li><a href="#" class="color5" id="load3">修改中</a></li>
+                <li><a href="#" class="color6" id="load4">已完成</a></li>
             </ul>
             <!-- <div class="center">统计：【大：20 中：30 小：60】</div> -->
             <div class="right">
                 <input type="text" placeholder="贵州华盛名酒销售有限公司">
-                <a href="#">查询</a>
+                <a href="#" id="search">查询</a>
             </div>
         </div>
         <!-- 下面写内容 -->
         <table class="layui-table" lay-filter="mylist" lay-size="lg">
             <thead>
                 <tr>  
-                    <th lay-data="{field:'yx', align:'center',width:160}">所属人</th>
+                    <!--<th lay-data="{field:'yx', align:'center',width:160}">所属人</th>-->
                     <th lay-data="{field:'time',align:'center', minWidth:190}">单位名称</th>
                     <th lay-data="{field:'www',align:'center',minWidth:180}">ftp/域名</th>
                     <th lay-data="{field:'company',align:'center',minWidth:98}">ID号</th>
-                    <th lay-data="{field:'user',align:'center',width:120}">产品类型</th>
+                    <th lay-data="{field:'user',align:'center',width:120}">合同号</th>
                     <th lay-data="{field:'tel',align:'center',width:130}">注册日期</th>
                     <th lay-data="{field:'result',align:'center',minWidth:160}">制作人员</th>
                     <th lay-data="{field:'addr',align:'center',minWidth:120}">制作进度</th> 
-                    <th lay-data="{field:'addr2',align:'center',minWidth:220}">最新意见</th>
+                    <th lay-data="{field:'addr2',align:'center',minWidth:220}">建议一</th>
+                    <th lay-data="{field:'addr3',align:'center',minWidth:220}">建议二</th>
+                    <th lay-data="{field:'addr4',align:'center',minWidth:220}">建议三</th>
                     <th lay-data="{field:'option',align:'center',width:130,toolbar:'#barDemo',fixed: 'right'}">操作</th>
                 </tr> 
             </thead>
-            <tbody> 
-                <tr>   
-                    <td> 谭振中 杨奇林 </td>
-                    <td>贵州万家美装饰有限公司</td>
-                    <td>gzzsgcgs.com</td>
-                    <td>8558899</td>
-                    <td>全网营销</td>
-                    <td>2019-02-05</td>
-                    <td>肖韦 胡绪雪</td>
-                    <td>制作中</td>
-                    <td>制作中，公众号已注册</td>
-                    <td>已超时，请加快进度</td>
-                </tr>
-                <tr>  
-                    <td> 李艳霞 </td>
-                    <td>贵州小河金鑫口腔诊所</td>
-                    <td>gzzsgcgs.com</td>
-                    <td>8558899</td>
-                    <td>全网营销</td>
-                    <td>2019-02-05</td>
-                    <td>肖韦 胡绪雪</td>
-                    <td>制作中</td>
-                    <td>制作中，公众号已注册</td>
-                </tr>
-                <tr>  
-                    <td> 谭振中 杨奇林 </td>
-                    <td>贵州万家美装饰有限公司</td>
-                    <td>gzzsgcgs.com</td>
-                    <td>8558899</td>
-                    <td>全网营销</td>
-                    <td>2019-02-05</td>
-                    <td>肖韦 胡绪雪</td>
-                    <td>制作中</td>
-                    <td>制作中，公众号已注册</td>
-                </tr>
+            <tbody>
             </tbody>  
             <!--<script type="text/html" id="barDemo">-->
                 <!--<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>-->

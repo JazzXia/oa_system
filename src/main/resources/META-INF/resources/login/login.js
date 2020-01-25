@@ -52,7 +52,7 @@ function login() {
                 addCookie("token", user.user.token);
                 addCookie("id",user.user.userId);
                 addCookie("roleType", user.user.roleType);
-
+                addCookie("name", user.user.nickName);
                 layer.msg("登录成功",{icon:1});
                 setInterval(function(){
                     location.href = "/child.html";
@@ -69,7 +69,7 @@ function login() {
             }
         },
         error : function(e) {
-            alert("网络连接异常",e.msg)
+            layer.msg("网络连接异常",e.msg)
         }
     })
 };
