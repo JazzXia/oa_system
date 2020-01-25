@@ -31,14 +31,16 @@
             <a>工单进程</a>
             <span>工单列表</span>
         </div>
+        <div class="wenxts_ke">
+            <p><i>温馨提示：</i>如果你是超级管理员,那么你就可以查看所有的工单信息,如果你是普通用户,那么你就只可以查看你自己的工单信息</p>
+        </div>
         <!-- 筛选 --> 
         <div class="shuaix">
             <ul class="gongdan_list_top">
                 <li><a href="#" class="color1">所有</a></li>
                 <li><a href="#" class="color2">待制作</a></li>
                 <li><a href="#" class="color3">制作中</a></li>
-                <li><a href="#" class="color4">待确认</a></li>
-                <li><a href="#" class="color5">修改中</a></li> 
+                <li><a href="#" class="color5">修改中</a></li>
                 <li><a href="#" class="color6">已完成</a></li> 
             </ul>
             <!-- <div class="center">统计：【大：20 中：30 小：60】</div> -->
@@ -59,8 +61,7 @@
                     <th lay-data="{field:'tel',align:'center',width:130}">注册日期</th>
                     <th lay-data="{field:'result',align:'center',minWidth:160}">制作人员</th>
                     <th lay-data="{field:'addr',align:'center',minWidth:120}">制作进度</th> 
-                    <th lay-data="{field:'addr1',align:'center',minWidth:190}">昨日进度</th> 
-                    <th lay-data="{field:'addr2',align:'center',minWidth:220}">领导意见</th> 
+                    <th lay-data="{field:'addr2',align:'center',minWidth:220}">最新意见</th>
                     <th lay-data="{field:'option',align:'center',width:130,toolbar:'#barDemo',fixed: 'right'}">操作</th>
                 </tr> 
             </thead>
@@ -76,9 +77,7 @@
                     <td>制作中</td>
                     <td>制作中，公众号已注册</td>
                     <td>已超时，请加快进度</td>
-                    <td><a href="#" class="jianl_list_img" onclick=" YuanG_IMG()"><img src="images/jl.jpg"></a></td>  
-                   
-                </tr>  
+                </tr>
                 <tr>  
                     <td> 李艳霞 </td>
                     <td>贵州小河金鑫口腔诊所</td>
@@ -89,8 +88,6 @@
                     <td>肖韦 胡绪雪</td>
                     <td>制作中</td>
                     <td>制作中，公众号已注册</td>
-                    <td> <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
-                    <td><a href="#" class="jianl_list_img" onclick=" YuanG_IMG()"><img src="images/jl.jpg"></a></td>  
                 </tr>
                 <tr>  
                     <td> 谭振中 杨奇林 </td>
@@ -102,14 +99,15 @@
                     <td>肖韦 胡绪雪</td>
                     <td>制作中</td>
                     <td>制作中，公众号已注册</td>
-                    <td> </td>
-                    <td><a href="#" class="jianl_list_img" onclick=" YuanG_IMG()"><img src="images/jl.jpg"></a></td>  
-                </tr> 
+                </tr>
             </tbody>  
+            <!--<script type="text/html" id="barDemo">-->
+                <!--<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>-->
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+            <!--</script> -->
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script> 
+                <a  href="GongDJC_my1.html"  class="layui-btn layui-btn-xs main_self_frame"  lay-event="edit">详情</a>
+            </script>
         </table> 
     </div>  
     <!-- layui js -->
