@@ -2,6 +2,8 @@ package com.qtatelier.OASystem.basics.revisit_log.mapper;
 
 import com.qtatelier.OASystem.basics.revisit_log.model.RevisitLog;
 import com.qtatelier.OASystem.basics.revisit_log.model.RevisitLogExample;
+import com.qtatelier.OASystem.request.RevisitLogReq;
+import com.qtatelier.OASystem.response.RevisitLogRes;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -96,4 +98,6 @@ public interface RevisitLogMapper {
      * @mbggenerated Fri Jan 24 10:27:51 CST 2020
      */
     int updateByPrimaryKey(RevisitLog record);
+
+    List<RevisitLogRes> findRevisitLog(RevisitLogReq revisitLogReq);
 }

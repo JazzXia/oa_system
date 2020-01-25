@@ -269,4 +269,31 @@
       revisit_tel = #{revisitTel,jdbcType=VARCHAR}
     where revisit_id = #{revisitId,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="findRevistLog" parameterType="com.qtatelier.OASystem.request.RevisitLogReq" resultType="com.qtatelier.OASystem.response.RevisitLogRes">
+SELECT
+	rl.revisit_id,
+	rl.revisit_log,
+	rl.revisit_date,
+	rl.revisit_tel,
+	ci.customer_contact,
+	ci.customer_name,
+	ci.customer_address,
+	ci.customer_phone
+FROM
+	revisit_log rl
+	LEFT JOIN link_customer_revisit lcr ON lcr.revisit_id = rl.revisit_id
+	LEFT JOIN customer_info ci ON ci.customer_id = lcr.customer_id
+	LEFT JOIN link_user_customer luc ON luc.customer_id = ci.customer_id
+	LEFT JOIN blog_user bu ON bu.user_id = luc.user_id
+	LEFT JOIN link_emp_user leu ON leu.user_id = luc.user_id
+	LEFT JOIN emp_info ei ON ei.emp_id = leu.emp_id
+WHERE
+	ei.is_leave = '1'
+    <if test="userId != null and userId != ''">
+      AND luc.user_id = #{userId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
 </mapper>
