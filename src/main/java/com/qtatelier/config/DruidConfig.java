@@ -34,8 +34,8 @@ public class DruidConfig {
     public ServletRegistrationBean statViewServlet() {
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), ("/druid/*"));
         Map<String, String> initParams = new HashMap<>();
-        initParams.put("loginUsername", "admin");
-        initParams.put("loginPassword", "JazzXia1314xyzff");
+        initParams.put("loginUsername", "dydsb");
+        initParams.put("loginPassword", "dydsb123456");
         initParams.put("allow", "");//默认就是允许所有
         //initParams.put("deny","");
         bean.setInitParameters(initParams);
