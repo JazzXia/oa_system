@@ -85,6 +85,8 @@ public class CodeBusiness {
         String DUTY_MODULE = "职位模块";
         /**日志模块*/
         String LOG_MODULE = "日志模块";
+        /**客户模块*/
+        String CUSTOMER_MODULE = "客户模块";
     }
 
 }
