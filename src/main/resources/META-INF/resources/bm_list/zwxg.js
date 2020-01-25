@@ -49,7 +49,7 @@ function updateInfo(){
             }
         },
         error : function(e) {
-            alert("网络连接异常")
+            layer.msg("网络连接异常")
         }
     })
 

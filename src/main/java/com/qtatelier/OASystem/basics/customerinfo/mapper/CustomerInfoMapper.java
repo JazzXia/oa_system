@@ -99,6 +99,12 @@ public interface CustomerInfoMapper {
     int updateByPrimaryKey(CustomerInfo record);
 
 
-
     List<CustomerInfo> selectByExampleInfo(CustomerReq customerReq);
+
+    /**
+     *
+     * @param customerInfo
+     * @return
+     */
+    int updateByIdCustomerInfo(CustomerInfo customerInfo);
 }

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,7 +69,7 @@ public class CustomerInfoController {
      * @param customerAddReq
      * @param token
      * @return
-     * @description 新增部门
+     * @description 添加客户信息
      */
     @ApiOperation(value = "添加客户信息", notes = "添加客户信息")
     @ApiImplicitParams({
@@ -127,4 +128,32 @@ public class CustomerInfoController {
         return resultView;
     }
 
+
+
+    @PutMapping("/updateGd")
+    @ApiOperation(value = "工单提交", notes = "工单提交修改状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "令牌", paramType = "header", dataType = "String", required = true)
+    })
+    @SystemControllerLog(description = "工单提交修改状态", optType = CodeBusiness.OPT_TYPE.UPDATE_CODE, moduleName = CodeBusiness.MODULE_NAME.CUSTOMER_MODULE)
+    @UserLoginToken
+    public ResultView updateLoad(@RequestBody CustomerInfo customerInfo,String token){
+        String logStr = "工单提交修改状态";
+        ResultView resultView = null;
+        try {
+            logger.info(logStr + "开始",customerInfo.toString(), token);
+            CodeEnum codeEnum= customerInfoService.updateLoad(customerInfo);
+            if (codeEnum == CodeEnum.SUCCESS){
+                resultView = new ResultView(CodeEnum.SUCCESS,"工单提交修改状态成功!!");
+            }else {
+                resultView = new ResultView(CodeEnum.ERROR_500,"修改状态失败!");
+            }
+        } catch (Exception e) {
+            logger.error(logStr + "失败", e);
+            resultView = new ResultView(CodeEnum.ERROR_500, e.getMessage());
+        } finally {
+            logger.info(logStr + "结束");
+        }
+        return resultView;
+    }
 }

@@ -62,6 +62,8 @@ function showAllList(info) {
     $(".wangid_conbox  table tr:not(:first)").empty("");
     for (var i = 0; i < info.length ; i++){
 
+        $("#detail").attr("href","GongDJC_my1.html?customerId="+info[i].customerId);
+
         var load = null;
         if (info[i].load == "1"){
             load = "待制作";
@@ -106,38 +108,44 @@ function showAllList(info) {
             ,count: 50 //数据总数 服务端获得
             ,limit: 10 //每页显示条数 注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
             ,page:true //开启分页
-            ,toolbar: '#toolbarDemo' //指向自定义工具栏模板选择器
+            // ,toolbar: '#toolbarDemo' //指向自定义工具栏模板选择器
             ,defaultToolbar:['filter', 'exports']
             ,limits:[10, 20, 30, 40, 50]//分页显示每页条目下拉选择
             ,cellMinWidth: 60//定义全局最小单元格宽度，其余自动分配宽度
         });
-        //监听头工具栏事件
-        table.on('toolbar(mylist)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id)
-                ,data = checkStatus.data; //获取选中的数据
-            switch(obj.event){
-                case 'getCheckLength':
-                    if(data.length === 0){
-                        layer.msg('请选择一行');
-                    } else {
-                        layer.msg('删除');
-                    }
-                    break;
-            };
-        });
-    });
-    layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        //年选择器
-        laydate.render({
-            elem: '#test2'
-            ,type: 'month'
-        });
+        //监听行工具事件
+        table.on('tool(mylist)', function(obj){ //注：tool 是工具条事件名，mylist 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){
+                // layer.open({
+                //     type: 2,
+                //     skin: 'layui-layer-molv',
+                //     title: '修改职位信息',
+                //     content:['/GongDJC_my1.html'+'?customerId='+obj.data.company,'true'] ,//不允许出现滚动条
+                //     area:['800px', '600px']
+                // });
+                if (obj.data.addr == "待制作"){
+                    location.href = "/GongDJC_my1.html?customerId="+obj.data.company;
+                }
+                if (obj.data.addr == "制作中"){
+                    location.href = "/GongDJC_my2.html?customerId="+obj.data.company;
+                }
+                if (obj.data.addr == "修改中"){
+                    location.href = "/GongDJC_my4.html?customerId="+obj.data.company;
+                }
+                if (obj.data.addr == "已完成"){
+                    location.href = "/GongDJC_my5.html?customerId="+obj.data.company;
+                }
 
-        //年月选择器
-        laydate.render({
-            elem: '#test3'
-            ,type: 'month'
+                //layer.msg('修改操作');
+            }
         });
     });
 }

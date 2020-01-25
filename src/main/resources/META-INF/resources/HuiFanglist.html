@@ -19,6 +19,9 @@
     <!-- layui css -->
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script type="text/javascript" src="vip/huifang.js"></script>
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -33,80 +36,67 @@
         </div>
         <!-- 内容 -->    
         <!-- 筛选 --> 
-        <div class="shuaix"> 
-            <div class="left"   style="margin-right:10px;">
-                <!-- <b>员工：</b> -->
-                <select>   
-                    <option value="营销总监">营销总监</option>   
-                    <option value="其他">其他</option>   
-                </select>
-            </div>  
-            <div class="right">
-                <input type="text" placeholder="贵州华盛名酒销售有限公司">
-                <a href="#">查询</a>
-            </div>
-        </div>
+        <!--<div class="shuaix"> -->
+            <!--<div class="left"   style="margin-right:10px;">-->
+                <!--&lt;!&ndash; <b>员工：</b> &ndash;&gt;-->
+                <!--<select>   -->
+                    <!--<option value="营销总监">营销总监</option>   -->
+                    <!--<option value="其他">其他</option>   -->
+                <!--</select>-->
+            <!--</div>  -->
+            <!--<div class="right">-->
+                <!--<input type="text" placeholder="贵州华盛名酒销售有限公司">-->
+                <!--<a href="#">查询</a>-->
+            <!--</div>-->
+        <!--</div>-->
         <!-- 下面写内容 -->
         <table class="layui-table" lay-filter="mylist" lay-size="lg">
             <thead>
                 <tr> 
-                    <th lay-data="{type:'checkbox',fixed:'left'}"></th>
+                    <!--<th lay-data="{type:'checkbox',fixed:'left'}"></th>-->
                     <th lay-data="{field:'yx', align:'center',width:180}">拜访时间</th>
                     <th lay-data="{field:'time',align:'center', minWidth:240}">单位名称</th>
                     <th lay-data="{field:'www',align:'center',minWidth:98}">客户称呼</th>
                     <th lay-data="{field:'company',align:'center',minWidth:260}">客户地址</th>
                     <th lay-data="{field:'user',align:'center',width:180}">客户电话</th>
-                    <th lay-data="{field:'tel',align:'center',width:100}">拜访用时</th>
+                    <!--<th lay-data="{field:'tel',align:'center',width:100}">拜访用时</th>-->
                     <th lay-data="{field:'result',align:'center',minWidth:100}">拜访情况</th>
-                    <th lay-data="{field:'addr',align:'center',minWidth:120}">后期处理</th> 
+                    <!--<th lay-data="{field:'addr',align:'center',minWidth:120}">后期处理</th> -->
                     <th lay-data="{field:'addr1',align:'center',minWidth:120}">备注</th> 
-                    <th lay-data="{field:'addr2',align:'center',minWidth:120}">行政回访</th> 
-                    <th lay-data="{field:'addr3',align:'center',minWidth:210}">领导意见</th>  
+                    <!--<th lay-data="{field:'addr2',align:'center',minWidth:120}">行政回访</th> -->
+                    <!--<th lay-data="{field:'addr3',align:'center',minWidth:210}">领导意见</th>  -->
                 </tr> 
             </thead>
             <tbody>
                 <tr> 
-                    <td></td>
+                    <!--<td></td>-->
                     <td>2019-5-9 16:00</td>
                     <td>贵州万家美装饰有限公司</td>
                     <td>翁总</td>
                     <td>贵州省贵阳市金阳世纪城</td>
                     <td>13698509298</td>
-                    <td>00:10</td>
                     <td>考虑中</td>
-                    <td>继续跟进</td>
-                    <td> </td>
-                    <td><input type="text" name="title" required lay-verify="required" placeholder="这是回访文本输入框" autocomplete="off" class="layui-input">    </td>
-                    <td></td>  
-                </tr>  
-                <tr> 
-                    <td></td>
-                    <td>2019-5-9 16:00</td>
-                    <td>贵州万家美装饰有限公司</td>
-                    <td>翁总</td>
-                    <td>贵州省贵阳市金阳世纪城</td>
-                    <td>13698509298</td>
-                    <td>00:10</td>
                     <td>考虑中</td>
-                    <td>继续跟进</td>
-                    <td> </td>
-                    <td> </td>
-                    <td></td>  
                 </tr>
                 <tr> 
-                    <td></td>
+                    <!--<td></td>-->
                     <td>2019-5-9 16:00</td>
                     <td>贵州万家美装饰有限公司</td>
                     <td>翁总</td>
                     <td>贵州省贵阳市金阳世纪城</td>
                     <td>13698509298</td>
-                    <td>00:10</td>
                     <td>考虑中</td>
-                    <td>继续跟进</td>
-                    <td> </td>
-                    <td> </td>
-                    <td>此客户心态不正常，如真想 做的，会同你的技术员去沟 通，而不是销售员。阅  (2010.10.08)
-                    </td>  
+                    <td>考虑中</td>
+                </tr>
+                <tr> 
+                    <!--<td></td>-->
+                    <td>2019-5-9 16:00</td>
+                    <td>贵州万家美装饰有限公司</td>
+                    <td>翁总</td>
+                    <td>贵州省贵阳市金阳世纪城</td>
+                    <td>13698509298</td>
+                    <td>考虑中</td>
+                    <td>考虑中</td>
                 </tr>
             </tbody>  
         </table>
@@ -115,8 +105,8 @@
 <!-- 自定义头部工具栏 -->
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container"> 
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">以保存</button> 
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除</button> 
+            //<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">以保存</button>-->
+            <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除</button> -->
 
         </div>
     </script> 

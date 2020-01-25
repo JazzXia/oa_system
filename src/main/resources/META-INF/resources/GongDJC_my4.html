@@ -19,6 +19,9 @@
     <!-- layui css -->
     <link rel="stylesheet" href="layui/css/layui.css">
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script type="text/javascript" src="GongDJC/GongD_my.js"></script>
+    <script src="js/cookie_util.js"></script>
     
 </head>
 
@@ -34,15 +37,13 @@
         </div>
         <!-- 内容 -->    
         <div class="wenxts_ke">
-            <p><i>温馨提示：</i>请认真核对员工信息正确无误后再确定添加，并上传员工的对应简历图片</p>
+            <p><i>温馨提示：</i>提交之后将无法修改!!</p>
         </div>  
         <!-- 下面写内容 -->
         <div class="gd_my_xq_top">
-            <p><b>公司名称：</b>贵州九树子美容服务有限公司</p>
-            <p><b>产品类型：</b>全网营销</p>
-            <p><b>所有人：</b>谭振中 杨奇林</p>
-            <p><b>注册日期：</b>2019-05-10</p>
-            <p><b>制作人员：</b>肖韦</p>
+            <p><b>公司名称：</b><span id="customerName"></span></p>
+            <p><b>注册日期：</b><span id="signDate"></span></p>
+            <p><b>制作人员：</b><span id="author"></span></p>
         </div>
         <div class="gd_my_buz">
             <ul>
@@ -56,58 +57,34 @@
         <div class="gd_diangq_zt">
             <div class="left">
                 <p>修改进度：</p> 
-                <textarea name="" id="" cols="30" rows="8" placeholder="请填写修改进度"></textarea>
+                <textarea name="" id="suggestion3" cols="30" rows="8" placeholder="请填写修改进度"></textarea>
                 <div class="anniu">
-                    <a href="#"  >保存进度</a>
-                    <a href="GongDJC_my5.html" class="no main_self_frame">下一步</a>
+                    <!--<a href="#"  >保存进度</a>-->
+                    <a class="no main_self_frame" id="startMake3">下一步</a>
                 </div>
             </div>
             <div class="right_fd">
                 <ul>
                     <li>
-                        <p><i></i><b>制作中</b>(2019-05-21 15:30)</p>
+                        <p><i></i><b>待制作</b></p>
                     </li>
                     <li>
                         <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来</dd>
+                            <dt><img src="images/hong.png" alt=""><span>建议一</span></dt>
+                            <dd id="detailInfo1"></dd>
                         </dl>
+                    </li>
+                    <li>
+                        <p><i></i><b>制作中</b></p>
                     </li>
                     <li>
                         <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来</dd>
+                            <dt><img src="images/hong.png" alt=""><span>建议二</span></dt>
+                            <dd id="detailInfo2"></dd>
                         </dl>
                     </li>
                     <li>
-                        <p><i></i><b>制作中</b>(2019-05-21 15:30)</p>
-                    </li>
-                    <li>
-                        <p><i></i><b>制作中</b>(2019-05-21 15:30)</p>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来开始制作网站，联系客户发资料过来开始制作网站，联系客户发资料过来。</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来</dd>
-                        </dl>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt><img src="images/hong.png" alt=""><span>2019-05-21 18:30</span></dt>
-                            <dd>开始制作网站，联系客户发资料过来</dd>
-                        </dl>
+                        <p><i></i><b>修改中</b></p>
                     </li>
                 </ul>
             </div>

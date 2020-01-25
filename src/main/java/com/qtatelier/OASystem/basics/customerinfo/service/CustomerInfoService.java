@@ -95,4 +95,15 @@ public class CustomerInfoService {
         }
         throw new CustomerException("当前客户不存在");
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public CodeEnum updateLoad(CustomerInfo customerInfo){
+        CodeEnum codeEnum = CodeEnum.SUCCESS;
+        int iSuccess = customerInfoMapper.updateByIdCustomerInfo(customerInfo);
+        if (iSuccess<1){
+            throw new CustomerException("修改状态失败!");
+        }
+        return codeEnum;
+    }
+
 }
