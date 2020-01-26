@@ -99,5 +99,5 @@ public interface RevisitLogMapper {
      */
     int updateByPrimaryKey(RevisitLog record);
 
-    List<RevisitLogRes> findRevisitLog(RevisitLogReq revisitLogReq);
+    List<RevisitLogRes> findRevistLog(RevisitLogReq revisitLogReq);
 }

@@ -73,8 +73,8 @@ function showAllList(info) {
     for (var i = 0; i < info.length ; i++){
 
         $(".wangid_conbox table tbody").prepend(
-            "<tr><td></td> "
-            +"<td><a  href='javascript:;' style='color:#9e3b3e;' onclick='Vip_hf()'>回访</a>丨<a href='javascript:;' style='color:#205b9e;' onclick='Vip_xq("+JSON.stringify(info[i].customerId)+");'>详情</a> </td>"
+            "<tr> "
+            +"<td><a  href='javascript:;' style='color:#9e3b3e;' onclick='Vip_hf("+JSON.stringify(info[i].customerId)+")'>回访</a>丨<a href='javascript:;' style='color:#205b9e;' onclick='Vip_xq("+JSON.stringify(info[i].customerId)+");'>详情</a> </td>"
             +"<td>"+info[i].contract+"</td>>"
             +"<td>"+info[i].author+"</td>>"
             +"<td>"+info[i].customerName+"</td>"
@@ -152,7 +152,7 @@ function Vip_xq(id){
 
 }
 //  iframe层  回访记录
-function Vip_hf(){
+function Vip_hf(id){
     //iframe层
     layer.open({
         type: 2,//层类型
@@ -165,7 +165,7 @@ function Vip_hf(){
         // offset: 'rb', //右下角弹出
         // time: 2000, //2秒后自动关闭
         anim: 5,//动画
-        content: ['vip_list_hf.html', 'no'], //iframe的url，no代表不显示滚动条
+        content: ['vip_list_hf.html?customerId='+id, 'no'], //iframe的url，no代表不显示滚动条
     });
 
 }

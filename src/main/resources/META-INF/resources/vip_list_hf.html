@@ -17,8 +17,11 @@
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- layui css -->
-	<link rel="stylesheet" href="layui/css/layui.css" media="all">
-	<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script> 
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="layui/lay/modules/layer.js"></script>
+    <script type="text/javascript" src="vip/vip_list_hf.js"></script>
+    <script src="js/cookie_util.js"></script>
 	<!-- layui js -->
 	<script src="layui/layui.js"></script>
 </head>
@@ -29,53 +32,38 @@
     <tbody>
         <tr>
             <td class="td_1">公司名称</td> 
-            <td colspan="3">贵州九树子美容服务有限公司</td>
+            <td colspan="3" id="companyName"></td>
         </tr>
         <tr>
             <td  class="td_1">ID号</td> 
-            <td>81048555555</td>
-            <td  class="td_1" style="border-right: 0;border-left: 0;">所有人</td> 
-            <td>罗大陆 宋俊文</td>
+            <td id="customerId"></td>
+            <td  class="td_1" style="border-right: 0;border-left: 0;">制作人</td>
+            <td id="author"></td>
         </tr>
         <tr>
-            <td  class="td_1">回访记录</td> 
+            <td  class="td_1">员工建议</td>
             <td colspan="3">
                 <div class="VIP_huifang">
-                    <textarea rows="4" cols="20"  readonly="readonly">客户在考虑，有很大把握会做，等明天再联系.</textarea>
-                    <input type="button" value="获取当前日期">
+                    <textarea rows="4" cols="20"  id="revisitLog" placeholder="填写与客户交流的注意事项"></textarea>
+                    <input type="button" value="获取当前日期" id="time">
                 </div> 
             </td>
         </tr>
         <tr>
-            <td  class="td_1">VIP客户<br>电话记录</td> 
+            <td  class="td_1">VIP客户<br>回访记录</td>
             <td colspan="3">
                  <div class="VIP_huifang">
-                    <textarea rows="4" cols="20"  readonly="readonly"> 电话记录</textarea>
-                    <!-- <input type="button" value="获取当前日期"> -->
-                </div> 
+                    <textarea rows="4" cols="20"  id="revisitTel" placeholder="填写客户当前意向"></textarea>
+                     <hr>
+                     <a href="#" class="color1" id="submit">提交回访记录</a>
+                </div>
             </td>
         </tr> 
     </tbody>
     </table>
 </div>
 <script type="text/javascript">    
-    $(function(){
-    function show(){
-        var mydate = new Date();
-        var str = "" + mydate.getFullYear() + "年";
-        str += (mydate.getMonth()+1) + "月";
-        str += mydate.getDate() + "日 ";
-        str += mydate.getHours() + "：";
-        str += mydate.getMinutes() + "分";
-        str += mydate.getSeconds() + "秒";
-        return str;
-    }
-    $(".VIP_huifang input[type='button']").click(function(){
-        $(".VIP_huifang input").val("回访时间 " + show());
-        // alert("www")
-    });
-    });
-</script> 
+</script>
 </body>
 
 </html>

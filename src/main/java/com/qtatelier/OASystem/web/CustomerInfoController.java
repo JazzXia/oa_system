@@ -90,8 +90,9 @@ public class CustomerInfoController {
                 if (codeEnum != CodeEnum.SUCCESS) {
                     logger.error(logStr + "失败");
                     resultView = new ResultView(CodeEnum.ERROR_501, CodeEnum.ERROR_501.getName());
+                }else {
+                    resultView = new ResultView(codeEnum, "添加客户成功");
                 }
-                resultView = new ResultView(codeEnum, "添加客户成功");
             } else {
                 resultView = new ResultView(CodeEnum.ERROR_405, "客户名不能为空");
             }

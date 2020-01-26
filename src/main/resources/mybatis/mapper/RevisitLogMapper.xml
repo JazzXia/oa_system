@@ -273,14 +273,14 @@
 
   <select id="findRevistLog" parameterType="com.qtatelier.OASystem.request.RevisitLogReq" resultType="com.qtatelier.OASystem.response.RevisitLogRes">
 SELECT
-	rl.revisit_id,
-	rl.revisit_log,
-	rl.revisit_date,
-	rl.revisit_tel,
-	ci.customer_contact,
-	ci.customer_name,
-	ci.customer_address,
-	ci.customer_phone
+	rl.revisit_id AS revisitId,
+	rl.revisit_log AS revisitLog,
+	rl.revisit_date AS revisitDate,
+	rl.revisit_tel AS revisitTel,
+	ci.customer_contact AS customerContact,
+	ci.customer_name AS customerName,
+	ci.customer_address AS customerAddress,
+	ci.customer_phone AS customerPhone
 FROM
 	revisit_log rl
 	LEFT JOIN link_customer_revisit lcr ON lcr.revisit_id = rl.revisit_id
