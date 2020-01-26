@@ -22,6 +22,10 @@
 	<script type="text/javascript" src="layui/lay/modules/layer.js"></script>
 	<script type="text/javascript" src="js/Tdrag.min.js"></script>
 	<script type="text/javascript" src="index/index.js"></script>
+	<script type="text/javascript" src="child/info.js"></script>
+	<!--<script type="text/javascript" src="js/echarts.min.js"></script>-->
+	<!--<script type="text/javascript" src="js/dark.js"></script>-->
+	<!--<script type="text/javascript" src="index/chart.js"></script>-->
 	<script src="js/cookie_util.js"></script>
 </head>
 
@@ -228,44 +232,45 @@
 	    	   				</div>
 	    				</div>
 	    				<div class="conbox">
-	    					<!--<div class="con">-->
-	    						<!--<h1>营销部各大区本月新增业绩PK实时展示图</h1>-->
-	    						<!--<div class="countbox">-->
-	    							<!--<div class="count">-->
-	    								<!--<span class="x"><img src="images/X.png"> x/营销分区</span>-->
-	    								<!--<span class="y"><img src="images/Y.png"> y/营销业绩</span>-->
-	    								<!--<ul>-->
-	    									<!--<li class="y1" style="height: calc(2% * 2); background: #ff4e00;"></li>-->
-	    									<!--<li class="y2" style="height: calc(3% * 2); background: #ffa200;"></li>-->
-	    									<!--<li class="y3" style="height: calc(7% * 2); background: #fffc00;"></li>-->
-	    									<!--<li class="y6" style="height: calc(5% * 2); background: #00ff55;"></li>-->
-	    									<!--<li class="y8" style="height: calc(3% * 2); background: #00ffd5;"></li>-->
-	    									<!--<li class="y10" style="height: calc(8% * 2); background: #00c0ff;"></li>-->
-	    									<!--<li class="y11" style="height: calc(4% * 2); background: #0078ff;"></li>-->
-	    									<!--<li class="y12" style="height: calc(6% * 2); background: #4200ff;"></li>-->
-	    									<!--<li class="y13" style="height: calc(14% * 2); background: #fc00ff;"></li>-->
-	    									<!--<li class="y16" style="height: calc(8% * 2); background: #ff007e;"></li>-->
-	    									<!--<li class="y18 on" style="height: calc(40% * 2); background: #ff0000;">-->
-	    								 		<!--<img src="images/flag.png" />-->
-	    								 	<!--</li>-->
-	    								 <!--&lt;!&ndash; 计算出每个大区所占百分比 以两倍高度展示，所占比超过百分之五十的，超出百分百以外的隐藏 &ndash;&gt;-->
-	    								<!--</ul>-->
-	    							<!--</div>-->
-	    							<!--<div class="num">-->
-	    								<!--<a>1区</a>-->
-	    								<!--<a>2区</a>-->
-	    								<!--<a>3区</a>-->
-	    								<!--<a>6区</a>-->
-	    								<!--<a>8区</a>-->
-	    								<!--<a>10区</a>-->
-	    								<!--<a>11区</a>-->
-	    								<!--<a>12区</a>-->
-	    								<!--<a>13区</a>-->
-	    								<!--<a>16区</a>-->
-	    								<!--<a>18区</a>-->
-	    							<!--</div>-->
-	    						<!--</div>-->
-	    					<!--</div>-->
+
+							<div id="chartmain" style="width:70%; height: 400px; float:right;"></div>
+	    					<div class="con">
+	    						<h1>冠状病毒分布图</h1>
+	    						<div class="countbox">
+	    							<div class="count">
+	    								<span class="x"><img src="images/X.png"> x/省份</span>
+	    								<span class="y"><img src="images/Y.png"> y/数量</span>
+	    								<ul>
+	    									<li class="y1" style="height: calc(2% * 2); background: #ff4e00;"></li>
+	    									<li class="y2" style="height: calc(3% * 2); background: #ffa200;"></li>
+	    									<li class="y3" style="height: calc(7% * 2); background: #fffc00;"></li>
+	    									<li class="y6" style="height: calc(5% * 2); background: #00ff55;"></li>
+	    									<li class="y8" style="height: calc(3% * 2); background: #00ffd5;"></li>
+	    									<li class="y10" style="height: calc(8% * 2); background: #00c0ff;"></li>
+	    									<li class="y11" style="height: calc(4% * 2); background: #0078ff;"></li>
+	    									<li class="y12" style="height: calc(6% * 2); background: #4200ff;"></li>
+	    									<li class="y13" style="height: calc(14% * 2); background: #fc00ff;"></li>
+	    									<li class="y16" style="height: calc(8% * 2); background: #ff007e;"></li>
+	    									<li class="y18 on" style="height: calc(40% * 2); background: #ff0000;">
+	    								 	</li>
+	    								 <!-- 计算出每个大区所占百分比 以两倍高度展示，所占比超过百分之五十的，超出百分百以外的隐藏 -->
+	    								</ul>
+	    							</div>
+	    							<div class="num">
+	    								<a>1区</a>
+	    								<a>2区</a>
+	    								<a>3区</a>
+	    								<a>6区</a>
+	    								<a>8区</a>
+	    								<a>10区</a>
+	    								<a>11区</a>
+	    								<a>12区</a>
+	    								<a>13区</a>
+	    								<a>16区</a>
+	    								<a>18区</a>
+	    							</div>
+	    						</div>
+	    					</div>
 	    					<!--<div class="con">-->
 	    						<!--<h1>渠道部各部门本月新增业绩PK实时展示图</h1>-->
 	    						<!--<div class="countbox">-->
@@ -293,8 +298,8 @@
     							$(".right_box .info_box .battle .tit a").mouseover(
     								function(){
     									n=$(this).index();
-    									$(this).addClass("on")
-    									$(this).siblings().removeClass("on")
+    									$(this).addClass("on");
+    									$(this).siblings().removeClass("on");
     									$(".right_box .info_box .battle .con").hide().eq(n).fadeIn()
     								}
     							)
@@ -304,84 +309,24 @@
 	    			<div class="box honor">
 	    				<div class="tit">
 							<!--<a class="on">营销业绩排行榜</a><a>渠道业绩排行榜</a>-->
-	    					<a class="on">最新新闻</a><a></a><!-- 注释去间隔
+	    					<a class="on">最新新闻[实时更新]</a><a></a><!-- 注释去间隔
 	    				 --><div></div>
 	    				</div>
-	    				<!--<div class="conbox">-->
-	    					<!--<div class="con">-->
-	    						<!--<div>-->
-		    						<!--<ul>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>章泽天</dt>-->
-		    									<!--<dd>所属分区：营销1区</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_1.png"></b>-->
-		    							<!--</li>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>鹿晗</dt>-->
-		    									<!--<dd>所属分区：营销11区</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_2.png"></b>-->
-		    							<!--</li>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>关晓彤</dt>-->
-		    									<!--<dd>所属分区：营销3区</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_3.png"></b>-->
-		    							<!--</li>-->
-		    						<!--</ul>-->
+	    				<div class="conbox">
+	    					<div class="con">
+	    						<div style=" overflow:scroll; width:100%; height:100%;">
+		    						<ul id="news">
+
+		    						</ul>
 		    						<!--<dl>-->
 		    							<!--<dt>上月前三名</dt>-->
 		    							<!--<dd>鹿晗</dd>-->
 		    							<!--<dd>关晓彤</dd>-->
 		    							<!--<dd>张娜拉</dd>-->
 		    						<!--</dl>-->
-		    					<!--</div>-->
+		    					</div>
 								<!--<p>详情请联系<a href="https://www.qtatelier.com">weiの小站</a></p>-->
-	    					<!--</div>-->
-	    					<!--<div class="con">-->
-	    						<!--<div>-->
-		    						<!--<ul>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>章泽天</dt>-->
-		    									<!--<dd>所属分区：渠道6部</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_1.png"></b>-->
-		    							<!--</li>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>鹿晗</dt>-->
-		    									<!--<dd>所属分区：渠道8部</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_2.png"></b>-->
-		    							<!--</li>-->
-		    							<!--<li>-->
-		    								<!--<i><img src="images/head.jpg"></i>-->
-		    								<!--<dl>-->
-		    									<!--<dt>关晓彤</dt>-->
-		    									<!--<dd>所属分区：渠道8部</dd>-->
-		    								<!--</dl>-->
-		    								<!--<b><img src="images/honor_3.png"></b>-->
-		    							<!--</li>-->
-		    						<!--</ul>-->
-		    						<!--<dl>-->
-		    							<!--<dt>上月前三名</dt>-->
-		    							<!--<dd>鹿晗</dd>-->
-		    							<!--<dd>关晓彤</dd>-->
-		    							<!--<dd>张娜拉</dd>-->
-		    						<!--</dl>-->
-		    					<!--</div>-->
-		    					<!--<p>渠道部的同学们很给力，加油！</p>-->
-	    					<!--</div>-->
+	    					</div>
 	    				</div>
 	    				<script type="text/javascript">
     						$(function(){
